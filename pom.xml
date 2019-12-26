@@ -12,11 +12,12 @@
 	<artifactId>creditor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>creditor</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Test task in Andersen</description>
 
 	<properties>
 		<java.version>1.8</java.version>
 		<postgresql.driver.version>42.2.5</postgresql.driver.version>
+		<bean.validation.version>2.0.1.Final</bean.validation.version>
 	</properties>
 
 	<dependencies>
@@ -32,6 +33,18 @@
 			<version>${postgresql.driver.version}</version>
 		</dependency>
 
+		<!-- validation-api -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${bean.validation.version}</version>
+		</dependency>
+
+		<!-- jackson-xml -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
