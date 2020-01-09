@@ -1,11 +1,9 @@
 package ru.mart.andersen.creditor.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "users",  uniqueConstraints = {
@@ -26,6 +24,13 @@ public class User extends AbstractBaseEntity {
     @NotNull
     @Size(min = 60, max = 60)
     private String password;
+
+    @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="user_role",
+            joinColumns={@JoinColumn(name="user_id", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="ID")})
+    private List<Role> roles;
 
     public User() {
     }
@@ -52,5 +57,13 @@ public class User extends AbstractBaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

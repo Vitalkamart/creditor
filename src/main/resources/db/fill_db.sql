@@ -1,6 +1,15 @@
 insert into users (name, login, password) values
-    ('User Userovich', 'login1', 'password1'),
-    ('Arnoldo Schwarzehfogel', 'login2', 'password2');
+    ('User Userovich', 'login1', '$2a$10$RK56TyFl9Td2WI7rXI/.0ue/KRMpe42HO/bv.DsQKDKp9EzSQxHUW'),
+    ('Arnoldo Schwarzehfogel', 'login2', '$2a$10$fkeDmtfaW7x9gpZm/Nh9guNtT8TT7J95xI7hJIbYV8.24e2E3mJ8G');
+
+insert into roles (name) values
+('ROLE_ADMIN'),
+('ROLE_USER');
+
+
+insert into user_role (user_id, role_id) values
+(1, 2),
+(2, 1);
 
 insert into items (name, price) values
     ('шкаф', 10000000),

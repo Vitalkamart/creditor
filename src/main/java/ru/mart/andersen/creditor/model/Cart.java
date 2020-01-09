@@ -14,7 +14,7 @@ public class Cart extends AbstractBaseEntity {
 
     @OneToMany(
             mappedBy = "order",
-            fetch = FetchType.EAGER,
+//            fetch = FetchType.EAGER,
             cascade = CascadeType.REMOVE)
     private List<OrderItem> orderItems;
 

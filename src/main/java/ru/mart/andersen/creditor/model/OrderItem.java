@@ -2,15 +2,20 @@ package ru.mart.andersen.creditor.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "order_items",  uniqueConstraints = {
         @UniqueConstraint(columnNames = {"order_id", "item_id"})})
+@XmlAccessorType(XmlAccessType.FIELD)
 public class OrderItem extends AbstractBaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
     @NotNull
+    @XmlTransient
     private Order order;
 
     @OneToOne
@@ -46,5 +51,15 @@ public class OrderItem extends AbstractBaseEntity {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "order=" + order +
+                ", item=" + item +
+                ", count=" + count +
+                ", id=" + id +
+                '}';
     }
 }

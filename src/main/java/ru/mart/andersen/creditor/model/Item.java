@@ -5,9 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 
 @Entity
 @Table(name = "items")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Item extends AbstractBaseEntity{
 
     @Column(name = "name")
@@ -16,11 +20,13 @@ public class Item extends AbstractBaseEntity{
             min = 5,
             max = 255,
             message = "item name should contain from 5 to 255 symbols")
+    @XmlElement(name = "name")
     private String name;
 
     @Column(name = "price")
     @NotNull
     @Size(min = 0, message = "price can't be negative")
+    @XmlElement(name = "price")
     private int price;
 
     public Item() {
@@ -40,5 +46,14 @@ public class Item extends AbstractBaseEntity{
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", id=" + id +
+                '}';
     }
 }
