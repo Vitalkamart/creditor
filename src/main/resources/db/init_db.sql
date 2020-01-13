@@ -81,7 +81,9 @@ create table credit_offers (
     user_login  varchar(100) not null,
     amount      integer      not null,
     credit_rate integer      not null,
-    check ((credit_rate >= 5) and (credit_rate <= 24)),
+    period      integer      not null,
+    check ((period > 1) and (period <= 120)),
+    check ((credit_rate >= 50) and (credit_rate <= 240)),
     check (amount >= 0),
     unique (uid),
     foreign key (order_id) references orders(id) on delete no action

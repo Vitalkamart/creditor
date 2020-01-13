@@ -1,13 +1,75 @@
 package ru.mart.andersen.creditor.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.mart.andersen.creditor.model.CreditOffer;
 import ru.mart.andersen.creditor.model.Order;
+import ru.mart.andersen.creditor.model.Product;
 import ru.mart.andersen.creditor.model.User;
+import ru.mart.andersen.creditor.repository.CreditOfferRepository;
+import ru.mart.andersen.creditor.repository.OrderRepository;
+import ru.mart.andersen.creditor.repository.ProductRepository;
+import ru.mart.andersen.creditor.to.OrderTo;
+import ru.mart.andersen.creditor.util.exceptions.NoSuitableInterestException;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static ru.mart.andersen.creditor.service.CreditUtil.*;
+import static ru.mart.andersen.creditor.to.converter.OrderConverter.getOrderFromTo;
 
 @Service
 public class CreditService {
-    public CreditOffer getCreditOffer(User user, Order order) {
-        return null;
+
+    @Autowired
+    private CreditOfferRepository creditOfferRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    public Optional<CreditOffer> getCreditOffer(Order order) {
+        Optional<Product> product = productRepository.findBySum(order.getPrice());
+        CreditOffer creditOffer = null;
+
+        if (product.isPresent()) {
+            creditOffer = getCreditOffer(order,  product.get());
+        }
+
+        return Optional.ofNullable(creditOffer);
     }
+
+    private CreditOffer getCreditOffer(Order order, Product product) {
+        CreditOffer creditOffer = new CreditOffer();
+
+        creditOffer.setOrder(order);
+        creditOffer.setAmount(getOfferAmount(order.getPrice(), order.getDiscount()).intValue());
+        setCreditRate(creditOffer, product.getMinRate(), product.getMaxRate());
+        return creditOffer;
+    }
+
+    @Transactional
+    public void manageOrder(OrderTo orderTo) {
+        Order order = getOrderFromTo(orderTo);
+        orderRepository.save(order);
+
+        Optional<CreditOffer> creditOffer = getCreditOffer(order);
+    }
+
+    private void setCreditRate(CreditOffer creditOffer, int minRate, int maxRate) {
+        List<Integer> rates = new ArrayList<>();
+        for (int i = minRate; i < maxRate; i++) {
+            rates.add(i);
+        }
+        BigDecimal price = BigDecimal.valueOf(creditOffer.getOrder().getPrice());
+        BigDecimal amount = BigDecimal.valueOf(creditOffer.getAmount());
+        creditOffer.setCreditRate(findBestInterest(rates, creditOffer.getPeriod(), price, amount));
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.mart.andersen.creditor.model.User;
+import ru.mart.andersen.creditor.service.CreditService;
 import ru.mart.andersen.creditor.service.OrderService;
 import ru.mart.andersen.creditor.service.UserService;
 import ru.mart.andersen.creditor.to.OrderTo;
@@ -19,8 +20,12 @@ public class CreditServiceController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CreditService creditService;
+
     @PostMapping (value = "/order", consumes = MediaType.APPLICATION_XML_VALUE)
     public String postOrder(@RequestBody OrderTo orderTo) {
+        creditService.manageOrder(orderTo);
         long orderId = orderTo.getId();
         return "login?order_id=" + orderId;
     }

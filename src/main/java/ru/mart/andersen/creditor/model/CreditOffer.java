@@ -37,8 +37,13 @@ public class CreditOffer extends AbstractBaseEntity {
 
     @Column(name = "credit_rate")
     @NotNull
-    @Size(min = 5, max = 24, message = "credit rate should be in range 5-24")
+    @Size(min = 50, max = 240, message = "credit rate should be in range 5-24")
     private int creditRate;
+
+    @Column(name = "period")
+    @NotNull
+    @Size(min = 1, max = 120, message = "period should be in range 0-120")
+    private int period;
 
     public CreditOffer() {
     }
@@ -89,5 +94,13 @@ public class CreditOffer extends AbstractBaseEntity {
 
     public void setCreditRate(int creditRate) {
         this.creditRate = creditRate;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
     }
 }
