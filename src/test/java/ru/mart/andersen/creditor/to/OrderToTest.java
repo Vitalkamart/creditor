@@ -13,6 +13,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ class OrderToTest {
         testOrder.setId(1L);
         testOrder.setUid("O-1");
         testOrder.setDiscount(0);
-        testOrder.setPrice(15000000);
+        testOrder.setPrice(BigDecimal.valueOf(15000000));
 
         UserTo userTo = new UserTo();
         userTo.setId(1L);
@@ -60,12 +61,12 @@ class OrderToTest {
         userTo.setName("User Userovich");
 
         Item item1 = new Item();
-        item1.setPrice(10000000);
+        item1.setPrice(BigDecimal.valueOf(10000000));
         item1.setName("шкаф");
         item1.setId(1L);
 
         Item item2 = new Item();
-        item2.setPrice(5000000);
+        item2.setPrice(BigDecimal.valueOf(5000000));
         item2.setName("стул");
         item2.setId(2L);
 
@@ -101,6 +102,7 @@ class OrderToTest {
             sw.close();
             sr.close();
 
+            marshaller.marshal(unmarshalled, System.out);
             assertEquals(testOrder.toString(), unmarshalled.toString());
         } catch(JAXBException | IOException e) {
             e.printStackTrace();

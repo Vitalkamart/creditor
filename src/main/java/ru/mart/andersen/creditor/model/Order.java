@@ -3,6 +3,7 @@ package ru.mart.andersen.creditor.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Order extends Cart {
     @Column(name = "price")
     @NotNull
     @Size(min = 0, message = "price can't be negative or null")
-    private int price;
+    private BigDecimal price;
 
     @Column(name = "discount")
     @NotNull
@@ -39,11 +40,11 @@ public class Order extends Cart {
         this.uid = uid;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

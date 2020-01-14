@@ -12,6 +12,18 @@ public class Payment {
     public Payment() {
     }
 
+    public Payment(int month,
+                   BigDecimal remainingBalance,
+                   BigDecimal principalPayment,
+                   BigDecimal interestPayment,
+                   BigDecimal payment) {
+        this.month = month;
+        this.remainingBalance = remainingBalance;
+        this.principalPayment = principalPayment;
+        this.interestPayment = interestPayment;
+        this.payment = payment;
+    }
+
     public int getMonth() {
         return month;
     }
@@ -50,5 +62,16 @@ public class Payment {
 
     public void setPayment(BigDecimal payment) {
         this.payment = payment;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "month=" + month +
+                ", remainingBalance=" + remainingBalance +
+                ", principalPayment=" + principalPayment +
+                ", interestPayment=" + interestPayment +
+                ", payment=" + payment +
+                '}';
     }
 }

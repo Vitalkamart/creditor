@@ -49,7 +49,7 @@ public class CreditService {
         CreditOffer creditOffer = new CreditOffer();
 
         creditOffer.setOrder(order);
-        creditOffer.setAmount(getOfferAmount(order.getPrice(), order.getDiscount()).intValue());
+        creditOffer.setAmount(getOfferAmount(order.getPrice(), order.getDiscount()));
         setCreditRate(creditOffer, product.getMinRate(), product.getMaxRate());
         return creditOffer;
     }
@@ -67,9 +67,11 @@ public class CreditService {
         for (int i = minRate; i < maxRate; i++) {
             rates.add(i);
         }
-        BigDecimal price = BigDecimal.valueOf(creditOffer.getOrder().getPrice());
-        BigDecimal amount = BigDecimal.valueOf(creditOffer.getAmount());
-        creditOffer.setCreditRate(findBestInterest(rates, creditOffer.getPeriod(), price, amount));
+        BigDecimal price = creditOffer.getOrder().getPrice();
+        BigDecimal amount = creditOffer.getAmount();
+        int period = creditOffer.getPeriod();
+
+        creditOffer.setCreditRate(findBestInterest(rates, period, price, amount));
     }
 
 }

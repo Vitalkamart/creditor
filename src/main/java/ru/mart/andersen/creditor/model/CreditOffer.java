@@ -3,6 +3,7 @@ package ru.mart.andersen.creditor.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -33,7 +34,7 @@ public class CreditOffer extends AbstractBaseEntity {
     @Column(name = "amount")
     @NotNull
     @Size(min = 0, message = "credit amount can't be negative or null")
-    private int amount;
+    private BigDecimal amount;
 
     @Column(name = "credit_rate")
     @NotNull
@@ -80,11 +81,11 @@ public class CreditOffer extends AbstractBaseEntity {
         this.userLogin = userLogin;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

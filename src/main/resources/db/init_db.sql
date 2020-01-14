@@ -47,14 +47,14 @@ create table products (
 create table items (
     id    bigserial primary key,
     name  varchar(255) not null,
-    price integer      not null,
+    price decimal      not null,
     check (price > 0)
 );
 
 create table orders (
     id       bigserial primary key,
     uid      varchar(10) not null,
-    price    integer     not null,
+    price    decimal     not null,
     discount integer,
     user_id  bigint      not null,
     check (price > 0),
@@ -79,7 +79,7 @@ create table credit_offers (
     order_id    bigint       not null,
     date_time   timestamp default now(),
     user_login  varchar(100) not null,
-    amount      integer      not null,
+    amount      decimal      not null,
     credit_rate integer      not null,
     period      integer      not null,
     check ((period > 1) and (period <= 120)),
