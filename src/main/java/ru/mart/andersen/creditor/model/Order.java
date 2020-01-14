@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "orders",  uniqueConstraints = {
@@ -13,11 +14,8 @@ public class Order extends Cart {
 
     @Column(name = "uid")
     @NotNull
-    @Size(
-            min = 4,
-            max = 10,
-            message = "product uid should contain from 5 to 10 symbols")
-    private String uid;
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    private UUID uid;
 
     @Column(name = "price")
     @NotNull
@@ -32,11 +30,11 @@ public class Order extends Cart {
     public Order() {
     }
 
-    public String getUid() {
+    public UUID getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(UUID uid) {
         this.uid = uid;
     }
 

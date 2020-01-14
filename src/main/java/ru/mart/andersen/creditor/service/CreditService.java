@@ -6,17 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.mart.andersen.creditor.model.CreditOffer;
 import ru.mart.andersen.creditor.model.Order;
 import ru.mart.andersen.creditor.model.Product;
-import ru.mart.andersen.creditor.model.User;
 import ru.mart.andersen.creditor.repository.CreditOfferRepository;
 import ru.mart.andersen.creditor.repository.OrderRepository;
 import ru.mart.andersen.creditor.repository.ProductRepository;
 import ru.mart.andersen.creditor.to.OrderTo;
-import ru.mart.andersen.creditor.util.exceptions.NoSuitableInterestException;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static ru.mart.andersen.creditor.service.CreditUtil.*;
@@ -35,11 +33,14 @@ public class CreditService {
     private ProductRepository productRepository;
 
     public Optional<CreditOffer> getCreditOffer(Order order) {
+        Objects.requireNonNull(order);
+
         Optional<Product> product = productRepository.findBySum(order.getPrice());
         CreditOffer creditOffer = null;
 
         if (product.isPresent()) {
             creditOffer = getCreditOffer(order,  product.get());
+            save(creditOffer);
         }
 
         return Optional.ofNullable(creditOffer);
@@ -56,6 +57,8 @@ public class CreditService {
 
     @Transactional
     public void manageOrder(OrderTo orderTo) {
+        Objects.requireNonNull(orderTo);
+
         Order order = getOrderFromTo(orderTo);
         orderRepository.save(order);
 
@@ -72,6 +75,10 @@ public class CreditService {
         int period = creditOffer.getPeriod();
 
         creditOffer.setCreditRate(findBestInterest(rates, period, price, amount));
+    }
+
+    private void save(CreditOffer creditOffer) {
+        creditOfferRepository.save(creditOffer);
     }
 
 }

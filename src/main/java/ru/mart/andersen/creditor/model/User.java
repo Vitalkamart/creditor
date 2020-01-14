@@ -6,8 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "users",  uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"login"})})
+@Table(name = "users",  uniqueConstraints = {@UniqueConstraint(columnNames = {"login"})})
 public class User extends AbstractBaseEntity {
 
     @Column(name = "name")

@@ -1,6 +1,8 @@
 package ru.mart.andersen.creditor.to;
 
-import ru.mart.andersen.creditor.model.OrderItem;
+//import ru.mart.andersen.creditor.model.OrderItem;
+
+import ru.mart.andersen.creditor.model.Item;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,8 +17,8 @@ public class CartTo {
     private UserTo userTo;
 
     @XmlElementWrapper(name = "item_list")
-    @XmlElement(name = "order_item")
-    private List<OrderItem> orderItems;
+    @XmlElement(name = "item")
+    private List<Item> orderItems;
 
     public UserTo getUserTo() {
         return userTo;
@@ -26,11 +28,11 @@ public class CartTo {
         this.userTo = userTo;
     }
 
-    public List<OrderItem> getOrderItems() {
+    public List<Item> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
+    public void setOrderItems(List<Item> orderItems) {
         this.orderItems = orderItems;
     }
 

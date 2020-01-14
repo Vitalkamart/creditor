@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 @Entity
 @Table(name = "products",  uniqueConstraints = {
@@ -14,11 +15,8 @@ public class Product extends AbstractBaseEntity {
 
     @Column(name = "uid")
     @NotNull
-    @Size(
-            min = 4,
-            max = 10,
-            message = "product uid should contain from 5 to 10 symbols")
-    private String uid;
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    private UUID uid;
 
     @Column(name = "min_sum")
     @NotNull
@@ -49,11 +47,11 @@ public class Product extends AbstractBaseEntity {
     public Product() {
     }
 
-    public String getUid() {
+    public UUID getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(UUID uid) {
         this.uid = uid;
     }
 

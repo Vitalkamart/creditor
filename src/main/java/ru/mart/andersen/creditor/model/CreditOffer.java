@@ -5,19 +5,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
-@Table(name = "credit_offers",  uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"uid"})})
+@Table(name = "credit_offers")
 public class CreditOffer extends AbstractBaseEntity {
 
     @Column(name = "uid")
     @NotNull
-    @Size(
-            min = 4,
-            max = 10,
-            message = "product uid should contain from 5 to 10 symbols")
-    private String uid;
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    private UUID uid;
 
     @OneToOne
     @NotNull
@@ -49,11 +46,11 @@ public class CreditOffer extends AbstractBaseEntity {
     public CreditOffer() {
     }
 
-    public String getUid() {
+    public UUID getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(UUID uid) {
         this.uid = uid;
     }
 

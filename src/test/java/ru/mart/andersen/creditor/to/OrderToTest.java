@@ -3,7 +3,7 @@ package ru.mart.andersen.creditor.to;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.mart.andersen.creditor.model.Item;
-import ru.mart.andersen.creditor.model.OrderItem;
+//import ru.mart.andersen.creditor.model.OrderItem;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -16,11 +16,11 @@ import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OrderToTest {
-    public static final String sampleXml = "";
     public static Marshaller marshaller;
     public static OrderTo testOrder;
 
@@ -51,7 +51,7 @@ class OrderToTest {
         testOrder = new OrderTo();
 
         testOrder.setId(1L);
-        testOrder.setUid("O-1");
+        testOrder.setUid(UUID.randomUUID());
         testOrder.setDiscount(0);
         testOrder.setPrice(BigDecimal.valueOf(15000000));
 
@@ -70,17 +70,9 @@ class OrderToTest {
         item2.setName("стул");
         item2.setId(2L);
 
-        OrderItem orderItem1 = new OrderItem();
-        orderItem1.setItem(item1);
-        orderItem1.setCount(1);
-
-        OrderItem orderItem2 = new OrderItem();
-        orderItem2.setItem(item2);
-        orderItem2.setCount(1);
-
-        List<OrderItem> orderItemList = new ArrayList<>();
-        orderItemList.add(orderItem1);
-        orderItemList.add(orderItem2);
+        List<Item> orderItemList = new ArrayList<>();
+        orderItemList.add(item1);
+        orderItemList.add(item2);
 
         CartTo cartTo = new CartTo();
         cartTo.setUserTo(userTo);
@@ -106,6 +98,13 @@ class OrderToTest {
             assertEquals(testOrder.toString(), unmarshalled.toString());
         } catch(JAXBException | IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    void itemUID() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(UUID.randomUUID());
         }
     }
 }
