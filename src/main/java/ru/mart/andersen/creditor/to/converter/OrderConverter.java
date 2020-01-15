@@ -21,7 +21,7 @@ public class OrderConverter {
         UserTo userTo = new UserTo(order.getUser());
 
         cartTo.setUserTo(userTo);
-        cartTo.setOrderItems(order.getOrderItems());
+        cartTo.setItems(order.getOrderItems());
 
         orderTo.setCartTo(cartTo);
         return orderTo;
@@ -38,7 +38,7 @@ public class OrderConverter {
         UserTo userTo = orderTo.getCartTo().getUserTo();
 
         order.setUser(getUserFromTo(userTo));
-        order.setOrderItems(orderTo.getCartTo().getOrderItems());
+        order.setOrderItems(orderTo.getCartTo().getItems());
 
         return order;
     }

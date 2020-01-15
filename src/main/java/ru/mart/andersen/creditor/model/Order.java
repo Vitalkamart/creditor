@@ -3,6 +3,7 @@ package ru.mart.andersen.creditor.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -25,14 +26,15 @@ public class Order extends Cart {
     @NotNull
     private String id;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale = 2)
     @NotNull
-    @Size(min = 0, message = "price can't be negative or null")
+//    @Size(min = 0, message = "price can't be negative or null")
+    @DecimalMin(value = "0", message = "price can't be negative")
     private BigDecimal price;
 
     @Column(name = "discount")
     @NotNull
-    @Size(min = 0, max = 100, message = "discount should be in range 0-100")
+//    @Size(min = 0, max = 100, message = "discount should be in range 0-100")
     private int discount;
 
     public Order() {
@@ -68,5 +70,15 @@ public class Order extends Cart {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "uid=" + uid +
+                ", id='" + id + '\'' +
+                ", price=" + price +
+                ", discount=" + discount +
+                '}';
     }
 }

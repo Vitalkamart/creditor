@@ -37,4 +37,13 @@ public class Cart {
     public void setOrderItems(List<Item> orderItems) {
         this.items = orderItems;
     }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "user name=" + user.getName() +
+                "user id=" + user.getId() +
+                ", items=" + items +
+                '}';
+    }
 }

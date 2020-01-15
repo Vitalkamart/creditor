@@ -1,9 +1,12 @@
 package ru.mart.andersen.creditor.model;
 
+import ru.mart.andersen.creditor.model.enums.Role;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users",  uniqueConstraints = {@UniqueConstraint(columnNames = {"login"})})
@@ -24,12 +27,15 @@ public class User extends AbstractBaseEntity {
     @Size(min = 60, max = 60)
     private String password;
 
-    @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(
-            name="user_role",
-            joinColumns={@JoinColumn(name="user_id", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="ID")})
-    private List<Role> roles;
+//    @ManyToOne(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name="user_role",
+//            joinColumns={@JoinColumn(name="user_id", referencedColumnName="ID")},
+//            inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="ID")})
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
     public User() {
     }
@@ -58,11 +64,21 @@ public class User extends AbstractBaseEntity {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", role=" + role +
+                ", id=" + id +
+                '}';
     }
 }

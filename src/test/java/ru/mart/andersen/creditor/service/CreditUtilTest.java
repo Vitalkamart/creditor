@@ -1,5 +1,6 @@
 package ru.mart.andersen.creditor.service;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,6 @@ class CreditUtilTest {
         int discountInt = 10;
         BigDecimal result = getOfferAmount(price, discountInt);
 
-        System.out.println("discount = 10 expected=90_000 result=" + result.intValue());
         assertEquals(90000, result.intValue());
         assertThrows(NullPointerException.class,
                 () -> getOfferAmount(null, 50));
@@ -103,10 +103,10 @@ class CreditUtilTest {
                 () -> findBestInterest(rates, creditOffer.getPeriod(), price, amount));
     }
 
-    @Test
-    void getUUID() {
-        for (int i = 0; i < 10; i++) {
-            System.out.println(UUID.randomUUID());
-        }
-    }
+//    @Test
+//    void getUUID() {
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println(UUID.randomUUID());
+//        }
+//    }
 }

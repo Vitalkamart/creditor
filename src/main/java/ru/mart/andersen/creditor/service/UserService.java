@@ -6,8 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.mart.andersen.creditor.model.Role;
 import ru.mart.andersen.creditor.model.User;
+import ru.mart.andersen.creditor.model.enums.Role;
 import ru.mart.andersen.creditor.repository.UserRepository;
 
 import java.util.Collections;
@@ -31,10 +31,10 @@ public class UserService {
     public void save(User user) {
         if (user.isNew()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            Role role = new Role();
-            role.setName("ROLE_USER");
-            role.setId(2L);
-            user.setRoles(Collections.singletonList(role));
+//            Role role = new Role();
+//            role.setName("ROLE_USER");
+//            role.setId(2L);
+            user.setRole(Role.USER);
         }
         userRepository.save(user);
     }

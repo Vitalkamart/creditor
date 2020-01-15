@@ -14,24 +14,24 @@ create table users (
     name     varchar(100) not null,
     login    varchar(100) not null,
     password varchar(60)  not null,
+    role     varchar(20)  not null,
     unique (login)
 );
 
 create unique index users_login_idx on users(login);
 
-create table roles (
-    id   bigserial primary key,
-    name varchar(20) not null,
-    unique (name)
-);
-
-create table user_role (
-    user_id bigint,
-    role_id bigint,
-    foreign key (user_id) references users(id),
-    foreign key (role_id) references roles(id),
-    unique (user_id, role_id)
-);
+-- create table roles (
+--     id   bigserial primary key,
+--     name varchar(20) not null,
+--     unique (name)
+-- );
+--
+-- create table user_role (
+--     user_id bigint,
+--     role    varchar(20),
+--     foreign key (user_id) references users(id),
+--     unique (user_id, role)
+-- );
 
 create table products (
     id       bigserial primary key,

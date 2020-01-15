@@ -18,7 +18,7 @@ public class CartTo {
 
     @XmlElementWrapper(name = "item_list")
     @XmlElement(name = "item")
-    private List<Item> orderItems;
+    private List<Item> items;
 
     public UserTo getUserTo() {
         return userTo;
@@ -28,19 +28,19 @@ public class CartTo {
         this.userTo = userTo;
     }
 
-    public List<Item> getOrderItems() {
-        return orderItems;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setOrderItems(List<Item> orderItems) {
-        this.orderItems = orderItems;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     @Override
     public String toString() {
         return "CartTo{" +
                 "userTo=" + userTo +
-                ", orderItems=" + orderItems +
+                ", orderItems=" + items +
                 '}';
     }
 }

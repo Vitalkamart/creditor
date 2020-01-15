@@ -28,8 +28,8 @@ public class SecurityUserDetailsService implements UserDetailsService {
     }
 
     private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
-        String[] userRoles = user.getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
-        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
+        String userRole = user.getRole().getAuthority();
+        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRole);
         return authorities;
     }
 }

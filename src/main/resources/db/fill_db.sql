@@ -1,14 +1,6 @@
-insert into users (name, login, password) values
-('User Userovich', 'login1', '$2a$10$RK56TyFl9Td2WI7rXI/.0ue/KRMpe42HO/bv.DsQKDKp9EzSQxHUW'),
-('Arnoldo Schwarzehfogel', 'login2', '$2a$10$fkeDmtfaW7x9gpZm/Nh9guNtT8TT7J95xI7hJIbYV8.24e2E3mJ8G');
-
-insert into roles (name) values
-('ROLE_ADMIN'),
-('ROLE_USER');
-
-insert into user_role (user_id, role_id) values
-(1, 2),
-(2, 1);
+insert into users (name, login, password, role) values
+('User Userovich', 'login1', '$2a$10$RK56TyFl9Td2WI7rXI/.0ue/KRMpe42HO/bv.DsQKDKp9EzSQxHUW', 'USER'),
+('Arnoldo Schwarzehfogel', 'login2', '$2a$10$fkeDmtfaW7x9gpZm/Nh9guNtT8TT7J95xI7hJIbYV8.24e2E3mJ8G', 'ADMIN');
 
 insert into orders (id, uid, price, discount, user_id) VALUES
 ('155', '9c6cd8a8-092e-4b09-a234-7eade8f24e49', 150000.00, 10, 1),

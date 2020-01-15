@@ -8,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class SecurityUserDetailsServiceTest {
     public static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    @Test
-    void user1Password() {
-        System.out.println(encoder.encode("password1"));
-    }
-
-    @Test
-    void user2Password() {
-        System.out.println(encoder.encode("password2"));
-    }
+//    @Test
+//    void user1Password() {
+//        System.out.println(encoder.encode("password1"));
+//    }
+//
+//    @Test
+//    void user2Password() {
+//        System.out.println(encoder.encode("password2"));
+//    }
 
 }

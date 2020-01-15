@@ -3,6 +3,7 @@ package ru.mart.andersen.creditor.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -49,9 +50,10 @@ public class Item {
     @XmlElement(name = "name")
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale = 2)
     @NotNull
-    @Size(min = 0, message = "price can't be negative")
+//    @Size(min = 0, message = "price can't be negative")
+    @DecimalMin(value = "0", message = "price can't be negative")
     @XmlElement(name = "price")
     private BigDecimal price;
 

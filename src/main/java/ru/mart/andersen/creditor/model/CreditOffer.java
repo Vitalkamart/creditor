@@ -1,6 +1,7 @@
 package ru.mart.andersen.creditor.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -30,7 +31,8 @@ public class CreditOffer extends AbstractBaseEntity {
 
     @Column(name = "amount")
     @NotNull
-    @Size(min = 0, message = "credit amount can't be negative or null")
+//    @Size(min = 0, message = "credit amount can't be negative or null")
+    @DecimalMin(value = "0", message = "price can't be negative")
     private BigDecimal amount;
 
     @Column(name = "credit_rate")

@@ -11,5 +11,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
+    @Transactional
     Optional<User> findByLogin(String login);
+
+    @Transactional
+    Optional<User> deleteByLogin(String login);
 }
