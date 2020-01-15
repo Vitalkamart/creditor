@@ -9,6 +9,7 @@ import ru.mart.andersen.creditor.model.Order;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.mart.andersen.creditor.service.CreditUtil.*;
@@ -25,7 +26,7 @@ class CreditUtilTest {
 
         creditOffer = new CreditOffer();
         Order order = new Order();
-        order.setDiscount(100);                   // 10%
+        order.setDiscount(10);                    // 10%
         order.setPrice(price);                    // 100 000,00
         creditOffer.setPeriod(12);                // 12 months
         creditOffer.setAmount(amount);            // 90 000,00 (cause of 10% discount)
@@ -39,6 +40,7 @@ class CreditUtilTest {
         int discountInt = 10;
         BigDecimal result = getOfferAmount(price, discountInt);
 
+        System.out.println("discount = 10 expected=90_000 result=" + result.intValue());
         assertEquals(90000, result.intValue());
         assertThrows(NullPointerException.class,
                 () -> getOfferAmount(null, 50));
@@ -84,5 +86,27 @@ class CreditUtilTest {
         int calculated = findBestInterest(rates, creditOffer.getPeriod(), price, amount);
         int expected = 199;
         assertEquals(expected, calculated);
+    }
+
+    @Test
+    void findBestInterestWithIllegalCreditRateTest() {
+        List<Integer> rates = new ArrayList<>();
+        for (int i = 50; i < 240; i++) {
+            if (i == 199) {
+                rates.add(-6);
+            } else {
+                rates.add(i);
+            }
+        }
+
+        assertThrows(IllegalArgumentException.class,
+                () -> findBestInterest(rates, creditOffer.getPeriod(), price, amount));
+    }
+
+    @Test
+    void getUUID() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(UUID.randomUUID());
+        }
     }
 }

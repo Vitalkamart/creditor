@@ -1,21 +1,44 @@
 package ru.mart.andersen.creditor.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "items", uniqueConstraints = {@UniqueConstraint(columnNames = {"uid"})})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Item extends AbstractBaseEntity{
+public class Item {
+
+    @Id
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
+    @Column(name = "uid")
+    @NotNull
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    @XmlElement(name = "uid")
+    private UUID uid;
+
+    @Column(name = "id")
+    @NotNull
+    @Size(
+            max = 255,
+            message = "item name should contain maximum 255 symbols")
+    private String id;
+
+    @ManyToOne
+    @JoinColumn(name = "order_uid", nullable = false)
+    @NotNull
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    @XmlTransient
+    private Order order;
 
     @Column(name = "name")
     @NotNull
@@ -26,11 +49,6 @@ public class Item extends AbstractBaseEntity{
     @XmlElement(name = "name")
     private String name;
 
-    @Column(name = "uid")
-    @NotNull
-    @org.hibernate.annotations.Type(type="pg-uuid")
-    private UUID uid;
-
     @Column(name = "price")
     @NotNull
     @Size(min = 0, message = "price can't be negative")
@@ -38,6 +56,22 @@ public class Item extends AbstractBaseEntity{
     private BigDecimal price;
 
     public Item() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public String getName() {

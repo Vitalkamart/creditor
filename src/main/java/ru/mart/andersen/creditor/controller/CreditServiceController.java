@@ -26,7 +26,7 @@ public class CreditServiceController {
     @PostMapping (value = "/order", consumes = MediaType.APPLICATION_XML_VALUE)
     public String postOrder(@RequestBody OrderTo orderTo) {
         creditService.manageOrder(orderTo);
-        long orderId = orderTo.getId();
+        String orderId = orderTo.getId();
         return "login?order_id=" + orderId;
     }
 

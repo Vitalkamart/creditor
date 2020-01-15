@@ -15,8 +15,8 @@ public class Product extends AbstractBaseEntity {
 
     @Column(name = "uid")
     @NotNull
-    @org.hibernate.annotations.Type(type="pg-uuid")
-    private UUID uid;
+    @Size(min = 4, max = 10, message = "product uid should contain 4-10 symbols")
+    private String uid;
 
     @Column(name = "min_sum")
     @NotNull
@@ -47,11 +47,11 @@ public class Product extends AbstractBaseEntity {
     public Product() {
     }
 
-    public UUID getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(UUID uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

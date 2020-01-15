@@ -38,6 +38,9 @@ public class CreditUtil {
         //
         while (end >= start) {
             int currentIntrst = interests.get(index);
+
+            checkCreditRateArg(currentIntrst);
+
             sum = getSum(currentIntrst, period, amount);
             if (sum.compareTo(price) == 0) {
                 return currentIntrst;

@@ -50,7 +50,7 @@ class OrderToTest {
     static void initOrderTo() {
         testOrder = new OrderTo();
 
-        testOrder.setId(1L);
+        testOrder.setId("1");
         testOrder.setUid(UUID.randomUUID());
         testOrder.setDiscount(0);
         testOrder.setPrice(BigDecimal.valueOf(15000000));
@@ -63,12 +63,12 @@ class OrderToTest {
         Item item1 = new Item();
         item1.setPrice(BigDecimal.valueOf(10000000));
         item1.setName("шкаф");
-        item1.setId(1L);
+        item1.setId("1");
 
         Item item2 = new Item();
         item2.setPrice(BigDecimal.valueOf(5000000));
         item2.setName("стул");
-        item2.setId(2L);
+        item2.setId("2");
 
         List<Item> orderItemList = new ArrayList<>();
         orderItemList.add(item1);

@@ -25,7 +25,6 @@ class PaymentServiceTest {
 
         creditOffer = new CreditOffer();
         Order order = new Order();
-        order.setDiscount(100);                                        // 10%
         order.setPrice(BigDecimal.valueOf(100000));                    // 100 000,00
         creditOffer.setPeriod(12);                                     // 12 months
         creditOffer.setAmount(BigDecimal.valueOf(90000));              // 90 000,00 (cause of 10% discount)

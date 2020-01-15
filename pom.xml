@@ -43,6 +43,14 @@
 			<version>${postgresql.driver.version}</version>
 		</dependency>
 
+		<!-- testcontainers postgresql -->
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>1.12.4</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- validation-api -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -79,6 +87,11 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

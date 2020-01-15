@@ -8,19 +8,15 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @MappedSuperclass
-public class Cart extends AbstractBaseEntity {
+public class Cart {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            name="order_items",
-            joinColumns={@JoinColumn(name="order_uid", referencedColumnName="UID")},
-            inverseJoinColumns={@JoinColumn(name="item_uid", referencedColumnName="UID")})
     private List<Item> items;
 
     protected Cart() {

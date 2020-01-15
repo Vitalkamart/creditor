@@ -12,7 +12,7 @@ import java.util.UUID;
 public class OrderTo {
 
     @XmlElement
-    private long id;
+    private String id;
 
     @XmlElement(name = "order_uid")
     private UUID uid;
@@ -26,11 +26,11 @@ public class OrderTo {
     @XmlElement
     private int discount;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

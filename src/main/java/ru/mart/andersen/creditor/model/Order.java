@@ -1,10 +1,11 @@
 package ru.mart.andersen.creditor.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -12,10 +13,17 @@ import java.util.UUID;
         @UniqueConstraint(columnNames = {"uid"})})
 public class Order extends Cart {
 
+    @Id
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
     @Column(name = "uid")
     @NotNull
     @org.hibernate.annotations.Type(type="pg-uuid")
     private UUID uid;
+
+    @Column(name = "id")
+    @NotNull
+    private String id;
 
     @Column(name = "price")
     @NotNull
@@ -28,6 +36,14 @@ public class Order extends Cart {
     private int discount;
 
     public Order() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public UUID getUid() {
