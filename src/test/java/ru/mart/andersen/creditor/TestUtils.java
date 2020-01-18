@@ -1,6 +1,5 @@
 package ru.mart.andersen.creditor;
 
-import ru.mart.andersen.creditor.model.Cart;
 import ru.mart.andersen.creditor.model.Item;
 import ru.mart.andersen.creditor.model.Order;
 import ru.mart.andersen.creditor.model.User;
@@ -10,9 +9,7 @@ import ru.mart.andersen.creditor.to.OrderTo;
 import ru.mart.andersen.creditor.to.UserTo;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TestUtils {
     private static User user1;
@@ -51,7 +48,7 @@ public class TestUtils {
         userTo.setLogin("login1");
         userTo.setName("User Userovich");
 
-        List<Item> itemList = new ArrayList<>();
+        Set<Item> itemList = new HashSet<>();
         itemList.add(item1);
         itemList.add(item2);
 
@@ -68,11 +65,11 @@ public class TestUtils {
         Order order = new Order();
 
         order.setPrice(new BigDecimal("250000.00"));
-        order.setId("1232");
+        order.setId("115");
         order.setDiscount(17);
         order.setUser(user1);
 
-        List<Item> items = new ArrayList<>();
+        Set<Item> items = new HashSet<>();
         items.add(item1);
         items.add(item2);
         items.add(item2);

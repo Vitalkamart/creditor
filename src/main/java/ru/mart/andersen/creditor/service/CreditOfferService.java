@@ -17,20 +17,43 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static ru.mart.andersen.creditor.service.CreditUtil.*;
+import static ru.mart.andersen.creditor.util.CreditUtil.*;
 import static ru.mart.andersen.creditor.to.converter.OrderConverter.getOrderFromTo;
+import static ru.mart.andersen.creditor.util.validators.OrderValidator.validateOrder;
 
 @Service
-public class CreditService {
+public class CreditOfferService {
 
-    @Autowired
+//    private final CreditOfferRepository creditOfferRepository;
+//    private final OrderRepository orderRepository;
+//    private final ProductRepository productRepository;
+//
+//    public CreditOfferService(CreditOfferRepository creditOfferRepository,
+//                              OrderRepository orderRepository,
+//                              ProductRepository productRepository) {
+//        this.creditOfferRepository = creditOfferRepository;
+//        this.orderRepository = orderRepository;
+//        this.productRepository = productRepository;
+//    }
+
     private CreditOfferRepository creditOfferRepository;
-
-    @Autowired
     private OrderRepository orderRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    public void setCreditOfferRepository(CreditOfferRepository creditOfferRepository) {
+        this.creditOfferRepository = creditOfferRepository;
+    }
+
+    @Autowired
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
+    @Autowired
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public Optional<CreditOffer> getCreditOffer(Order order) {
         Objects.requireNonNull(order);
@@ -60,9 +83,9 @@ public class CreditService {
         Objects.requireNonNull(orderTo);
 
         Order order = getOrderFromTo(orderTo);
-        orderRepository.save(order);
+        validateOrder(order);
 
-        Optional<CreditOffer> creditOffer = getCreditOffer(order);
+        orderRepository.save(order);
     }
 
     private void setCreditRate(CreditOffer creditOffer, int minRate, int maxRate) {

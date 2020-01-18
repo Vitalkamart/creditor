@@ -1,8 +1,9 @@
+drop table if exists orders_items;
 drop table if exists items;
+drop table if exists orders cascade;
 drop table if exists user_role;
 drop table if exists users cascade;
 drop table if exists roles;
-drop table if exists orders cascade;
 drop table if exists credit_offers;
 drop table if exists products;
 drop extension if exists pgcrypto;
@@ -58,22 +59,19 @@ create table orders (
 create table items (
     uid   uuid    primary key DEFAULT gen_random_uuid(),
     id    varchar(255)  not null,
-    order_uid uuid      not null,
     name  varchar(255)  not null,
     price decimal       not null,
     check (price > 0),
-    unique (uid),
-    foreign key (order_uid) references orders(uid)
+    unique (uid)
 );
 
--- create table order_items (
---     id       bigserial primary key,
---     order_uid  uuid  not null,
---     item_uid  uuid   not null,
---     unique (order_uid, item_uid),
---     foreign key (order_uid) references orders(uid) on delete no action,
---     foreign key (item_uid) references items(uid) on delete no action
--- );
+create table orders_items (
+    order_uid  uuid  not null,
+    items_uid  uuid   not null,
+    unique (order_uid, items_uid),
+    foreign key (order_uid) references orders(uid) on delete no action,
+    foreign key (items_uid) references items(uid) on delete no action
+);
 
 create table credit_offers (
     id          bigserial primary key,

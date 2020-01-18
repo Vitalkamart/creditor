@@ -1,18 +1,21 @@
 package ru.mart.andersen.creditor.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "orders",  uniqueConstraints = {
         @UniqueConstraint(columnNames = {"uid"})})
-public class Order extends Cart {
+public class Order {
 
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
@@ -26,6 +29,14 @@ public class Order extends Cart {
     @NotNull
     private String id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @NotNull
+    private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Item> items;
+
     @Column(name = "price", precision = 10, scale = 2)
     @NotNull
 //    @Size(min = 0, message = "price can't be negative or null")
@@ -34,7 +45,7 @@ public class Order extends Cart {
 
     @Column(name = "discount")
     @NotNull
-//    @Size(min = 0, max = 100, message = "discount should be in range 0-100")
+    @Range(min = 0, max = 100, message = "discount should be in range 0-100")
     private int discount;
 
     public Order() {
@@ -72,6 +83,22 @@ public class Order extends Cart {
         this.discount = discount;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Item> getOrderItems() {
+        return items;
+    }
+
+    public void setOrderItems(Set<Item> items) {
+        this.items = items;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -79,6 +106,7 @@ public class Order extends Cart {
                 ", id='" + id + '\'' +
                 ", price=" + price +
                 ", discount=" + discount +
+                ", items=" + items +
                 '}';
     }
 }

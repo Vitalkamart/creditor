@@ -3,6 +3,7 @@ package ru.mart.andersen.creditor.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,20 +11,34 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.thymeleaf.TemplateEngine;
+import ru.mart.andersen.creditor.model.enums.Role;
 import ru.mart.andersen.creditor.security.SecurityUserDetailsService;
+import ru.mart.andersen.creditor.service.UserService;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private SecurityUserDetailsService userDetailsService;
+    private final SecurityUserDetailsService userDetailsService;
+    private final DataSource dataSource;
 
-    @Autowired
-    private DataSource dataSource;
+    public SecurityConfig(SecurityUserDetailsService userDetailsService, DataSource dataSource) {
+        this.userDetailsService = userDetailsService;
+        this.dataSource = dataSource;
+    }
+
+    //    @Autowired
+//    public void setUserDetailsService(SecurityUserDetailsService userDetailsService) {
+//        this.userDetailsService = userDetailsService;
+//    }
+//
+//    @Autowired
+//    public void setDataSource(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,25 +55,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .headers()
                     .frameOptions().sameOrigin()
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/resources/**", "/webjars/**", "/assets/**").permitAll()
-                    .antMatchers("/order").permitAll()
-                    .antMatchers("/home").permitAll()
-                    .antMatchers("/register").permitAll()
-                    .antMatchers("/account").authenticated()
+                    .antMatchers(HttpMethod.POST, "/api/order").permitAll()
+                    .antMatchers("/api/user/register").permitAll()
+                    .antMatchers(HttpMethod.GET, "/api/order/").hasAuthority(Role.USER.getAuthority())
                     .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/home")
-                    .failureUrl("/login?error")
-                    .permitAll()
-                    .and()
-                .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login?logout")
                     .permitAll();
     }
 }

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static ru.mart.andersen.creditor.service.CreditUtil.*;
+import static ru.mart.andersen.creditor.util.CreditUtil.*;
+import static ru.mart.andersen.creditor.util.ValidationUtil.*;
 
 @Service
 public class PaymentService {
@@ -45,8 +46,8 @@ public class PaymentService {
 
     private void checkGetPaymentListArgs(CreditOffer creditOffer) {
         Objects.requireNonNull(creditOffer);
-        checkAmountArg(creditOffer.getAmount());
-        checkCreditRateArg(creditOffer.getCreditRate());
-        checkPeriodArg(creditOffer.getPeriod());
+        validateAmount(creditOffer.getAmount());
+        validateCreditRate(creditOffer.getCreditRate());
+        validatePeriod(creditOffer.getPeriod());
     }
 }

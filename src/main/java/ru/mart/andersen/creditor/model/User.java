@@ -24,7 +24,7 @@ public class User extends AbstractBaseEntity {
 
     @Column(name = "password")
     @NotNull
-    @Size(min = 60, max = 60)
+    @Size(min = 1)
     private String password;
 
 //    @ManyToOne(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -35,6 +35,7 @@ public class User extends AbstractBaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
+    @NotNull
     private Role role;
 
     public User() {

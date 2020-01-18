@@ -1,5 +1,7 @@
 package ru.mart.andersen.creditor.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -30,19 +32,18 @@ public class CreditOffer extends AbstractBaseEntity {
     private String userLogin;
 
     @Column(name = "amount")
-    @NotNull
-//    @Size(min = 0, message = "credit amount can't be negative or null")
+    @NotNull(message = "credit amount can't be null")
     @DecimalMin(value = "0", message = "price can't be negative")
     private BigDecimal amount;
 
     @Column(name = "credit_rate")
     @NotNull
-    @Size(min = 50, max = 240, message = "credit rate should be in range 5-24")
+    @Range(min = 50, max = 240, message = "credit rate should be in range 5-24")
     private int creditRate;
 
     @Column(name = "period")
     @NotNull
-    @Size(min = 1, max = 120, message = "period should be in range 0-120")
+    @Range(min = 1, max = 120, message = "period should be in range 0-120")
     private int period;
 
     public CreditOffer() {

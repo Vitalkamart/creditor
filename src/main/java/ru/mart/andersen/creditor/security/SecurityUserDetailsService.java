@@ -16,8 +16,12 @@ import java.util.Collection;
 @Service
 public class SecurityUserDetailsService implements UserDetailsService {
 
+    private UserService userService;
+
     @Autowired
-    UserService userService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {

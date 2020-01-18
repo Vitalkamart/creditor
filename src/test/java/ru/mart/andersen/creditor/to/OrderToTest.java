@@ -12,7 +12,6 @@ import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.mart.andersen.creditor.TestUtils.getTestOrderTo;
@@ -51,7 +50,7 @@ class OrderToTest {
     }
 
     @Test
-    @DisplayName("xml marshalling + (un) and fit it to template")
+    @DisplayName("xml marshalling/unmarshalling of OrderTo")
     void marshallingAndUnmarshalling() {
         try {
             StringWriter sw = new StringWriter();
@@ -70,6 +69,9 @@ class OrderToTest {
         }
     }
 
+    /**
+     * todo:
+     */
     private static void initXmlOrderToString() {
         xmlOrderToString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<order>\n" +
@@ -98,6 +100,7 @@ class OrderToTest {
                 "    <discount>0</discount>\n" +
                 "</order>";
     }
+
 //    @Test
 //    void itemUID() {
 //        for (int i = 0; i < 5; i++) {

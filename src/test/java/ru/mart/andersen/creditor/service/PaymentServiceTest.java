@@ -1,6 +1,7 @@
 package ru.mart.andersen.creditor.service;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.mart.andersen.creditor.model.CreditOffer;
 import ru.mart.andersen.creditor.model.Order;
@@ -61,6 +62,7 @@ class PaymentServiceTest {
     }
 
     @Test
+    @DisplayName("get payment list test")
     void getPaymentListTest() {
         List<Payment> payments = paymentService.getPaymentList(creditOffer);
 

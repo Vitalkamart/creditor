@@ -34,25 +34,17 @@ public class Item {
             message = "item name should contain maximum 255 symbols")
     private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_uid", nullable = false)
-    @NotNull
-    @org.hibernate.annotations.Type(type="pg-uuid")
-    @XmlTransient
-    private Order order;
-
     @Column(name = "name")
     @NotNull
     @Size(
-            min = 5,
+            min = 4,
             max = 255,
             message = "item name should contain from 5 to 255 symbols")
     @XmlElement(name = "name")
     private String name;
 
     @Column(name = "price", precision = 10, scale = 2)
-    @NotNull
-//    @Size(min = 0, message = "price can't be negative")
+    @NotNull(message = "price can't be null")
     @DecimalMin(value = "0", message = "price can't be negative")
     @XmlElement(name = "price")
     private BigDecimal price;
@@ -66,14 +58,6 @@ public class Item {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public String getName() {

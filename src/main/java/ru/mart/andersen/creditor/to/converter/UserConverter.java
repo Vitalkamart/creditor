@@ -1,6 +1,7 @@
 package ru.mart.andersen.creditor.to.converter;
 
 import ru.mart.andersen.creditor.model.User;
+import ru.mart.andersen.creditor.model.enums.Role;
 import ru.mart.andersen.creditor.to.UserTo;
 
 public class UserConverter {
@@ -11,6 +12,9 @@ public class UserConverter {
         userTo.setId(user.getId());
         userTo.setLogin(user.getLogin());
         userTo.setName(user.getName());
+        if (user.getRole() != null) {
+            userTo.setRole(user.getRole().getAuthority());
+        }
 
         return userTo;
     }
@@ -21,6 +25,10 @@ public class UserConverter {
         user.setId(userTo.getId());
         user.setLogin(userTo.getLogin());
         user.setName(userTo.getName());
+        user.setPassword(userTo.getPassword());
+        if (userTo.getRole() != null) {
+            user.setRole(Role.valueOf(userTo.getRole()));
+        }
 
         return user;
     }

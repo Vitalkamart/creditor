@@ -1,5 +1,7 @@
 package ru.mart.andersen.creditor.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -20,27 +22,27 @@ public class Product extends AbstractBaseEntity {
 
     @Column(name = "min_sum")
     @NotNull
-    @Size(min = 0, message = "product minimal sum can't be negative")
+    @Range(min = 0, message = "product minimal sum can't be negative")
     private int minSum;
 
     @Column(name = "max_sum")
     @NotNull
-    @Size(min = 0, message = "product maximum sum can't be negative")
+    @Range(min = 0, message = "product maximum sum can't be negative")
     private int maxSum;
 
     @Column(name = "min_rate")
     @NotNull
-    @Size(min = 0, message = "product minimal credit rate can't be negative")
+    @Range(min = 0, message = "product minimal credit rate can't be negative")
     private int minRate;
 
     @Column(name = "max_rate")
     @NotNull
-    @Size(min = 0, message = "product maximum credit rate can't be negative")
+    @Range(min = 0, message = "product maximum credit rate can't be negative")
     private int maxRate;
 
     @Column(name = "period")
     @NotNull
-    @Size(min = 0, max = 120, message = "period should be in range 0-120")
+    @Range(min = 0, max = 120, message = "period should be in range 0-120")
     private int period;
 
 

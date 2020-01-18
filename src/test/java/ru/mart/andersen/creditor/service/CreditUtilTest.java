@@ -1,6 +1,5 @@
 package ru.mart.andersen.creditor.service;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +9,9 @@ import ru.mart.andersen.creditor.model.Order;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.mart.andersen.creditor.service.CreditUtil.*;
+import static ru.mart.andersen.creditor.util.CreditUtil.*;
 
 class CreditUtilTest {
     private static CreditOffer creditOffer;
@@ -53,6 +51,7 @@ class CreditUtilTest {
     }
 
     @Test
+    @DisplayName("single pay test")
     void singlePayTest() {
         BigDecimal expected = new BigDecimal("8332.80")
                 .setScale(2, BigDecimal.ROUND_HALF_UP);

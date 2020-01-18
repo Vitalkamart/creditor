@@ -1,4 +1,4 @@
-package ru.mart.andersen.creditor.service;
+package ru.mart.andersen.creditor.util;
 
 import ru.mart.andersen.creditor.util.exceptions.NoSuitableInterestException;
 
@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
+
+import static ru.mart.andersen.creditor.util.ValidationUtil.*;
 
 public class CreditUtil {
     /**
@@ -21,9 +23,9 @@ public class CreditUtil {
                                        BigDecimal price,
                                        BigDecimal amount) {
         Objects.requireNonNull(interests);
-        checkPeriodArg(period);
-        checkPriceArg(price);
-        checkAmountArg(amount);
+        validatePeriod(period);
+        validatePrice(price);
+        validateAmount(amount);
 
         BigDecimal sum;
 
@@ -39,7 +41,7 @@ public class CreditUtil {
         while (end >= start) {
             int currentIntrst = interests.get(index);
 
-            checkCreditRateArg(currentIntrst);
+            validateCreditRate(currentIntrst);
 
             sum = getSum(currentIntrst, period, amount);
             if (sum.compareTo(price) == 0) {
@@ -90,13 +92,13 @@ public class CreditUtil {
      * @return
      */
     public static BigDecimal calculateSinglePayment(int creditRate, int period, BigDecimal amount) {
-        checkCreditRateArg(creditRate);
-        checkPeriodArg(period);
-        checkAmountArg(amount);
+        validateCreditRate(creditRate);
+        validatePeriod(period);
+        validateAmount(amount);
 
         //System.out.println("credit rate=" + creditRate + " period=" + period + " amount=" + amount);
 
-        // for 19,9% = 0,016583333
+        // for 19,9% and 12 month period = 0,016583333
         BigDecimal currentInterest = getInterestFromCreditRateAndPeriod(creditRate, period);
 
         // pay = amount * (interest + (interest / ((1 + interest) ^ period - 1)))
@@ -116,8 +118,8 @@ public class CreditUtil {
     }
 
     public static BigDecimal getOfferAmount(BigDecimal price, int discountInt) {
-        checkDiscountArg(discountInt);
-        checkPriceArg(price);
+        validateDiscount(discountInt);
+        validatePrice(price);
 
         BigDecimal discount = BigDecimal.valueOf(discountInt);
         BigDecimal x = BigDecimal.valueOf(100)
@@ -129,8 +131,8 @@ public class CreditUtil {
     }
 
     public static BigDecimal getInterestFromCreditRateAndPeriod(int creditRate, int period) {
-        checkCreditRateArg(creditRate);
-        checkPeriodArg(period);
+        validateCreditRate(creditRate);
+        validatePeriod(period);
 
         return BigDecimal.valueOf(creditRate)
                 .setScale(10, BigDecimal.ROUND_DOWN)
@@ -138,35 +140,5 @@ public class CreditUtil {
                 .divide(BigDecimal.valueOf(period), RoundingMode.DOWN);
     }
 
-    public static void checkCreditRateArg(int creditRate) {
-        if (creditRate < 50 || creditRate > 240) {
-            throw new IllegalArgumentException("credit rate out of range: min = 5% (50), max = 24% (240) ");
-        }
-    }
 
-    public static void checkPeriodArg(int period) {
-        if (period < 1 || period > 120) {
-            throw new IllegalArgumentException("period out of range: min = 1, max = 120 (months)");
-        }
-    }
-
-    public static void checkAmountArg(BigDecimal amount) {
-        Objects.requireNonNull(amount);
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("credit amount can't be <= 0");
-        }
-    }
-
-    public static void checkPriceArg(BigDecimal price) {
-        Objects.requireNonNull(price);
-        if (price.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("discount can't be < 0");
-        }
-    }
-
-    public static void checkDiscountArg(int discountInt) {
-        if (discountInt > 100 || discountInt < 0) {
-            throw new IllegalArgumentException("discount can't be out of range 0-100");
-        }
-    }
 }

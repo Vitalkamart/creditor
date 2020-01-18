@@ -1,9 +1,13 @@
 package ru.mart.andersen.creditor.to.converter;
 
+import ru.mart.andersen.creditor.model.Item;
 import ru.mart.andersen.creditor.model.Order;
 import ru.mart.andersen.creditor.to.CartTo;
 import ru.mart.andersen.creditor.to.OrderTo;
 import ru.mart.andersen.creditor.to.UserTo;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static ru.mart.andersen.creditor.to.converter.UserConverter.getUserFromTo;
 
@@ -31,7 +35,6 @@ public class OrderConverter {
         Order order = new Order();
 
         order.setId(orderTo.getId());
-        order.setUid(orderTo.getUid());
         order.setPrice(orderTo.getPrice());
         order.setDiscount(orderTo.getDiscount());
 
