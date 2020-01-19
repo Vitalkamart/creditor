@@ -1,52 +1,28 @@
-package ru.mart.andersen.creditor.model;
+package ru.mart.andersen.creditor.to;
 
-import org.hibernate.validator.constraints.Range;
-
-import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "credit_offers")
-public class CreditOffer extends AbstractBaseEntity {
-
-    @Column(name = "uid")
-    @NotNull
-    @org.hibernate.annotations.Type(type="pg-uuid")
+public class CreditOfferTo {
+    private Long id;
     private UUID uid;
-
-    @OneToOne
-    @NotNull
-    private Order order;
-
-    @Column(name = "date_time")
+    private UUID orderUid;
+    private String userName;
+    private BigDecimal amount;
+    private int creditRate;
+    private int period;
     private LocalDateTime dateTime;
 
-    @Column(name = "user_name")
-    @NotNull
-    @Size(min = 0, max = 100, message = "user login should have 5-100 symbols")
-    private String userName;
+    public CreditOfferTo() {
+    }
 
-    @Column(name = "amount")
-    @NotNull(message = "credit amount can't be null")
-    @DecimalMin(value = "0", message = "price can't be negative")
-    private BigDecimal amount;
+    public Long getId() {
+        return id;
+    }
 
-    @Column(name = "credit_rate")
-    @NotNull
-    @Range(min = 50, max = 240, message = "credit rate should be in range 5-24")
-    private int creditRate;
-
-    @Column(name = "period")
-    @NotNull
-    @Range(min = 1, max = 120, message = "period should be in range 0-120")
-    private int period;
-
-    public CreditOffer() {
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public UUID getUid() {
@@ -57,12 +33,12 @@ public class CreditOffer extends AbstractBaseEntity {
         this.uid = uid;
     }
 
-    public Order getOrder() {
-        return order;
+    public UUID getOrderUid() {
+        return orderUid;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderUid(UUID orderUid) {
+        this.orderUid = orderUid;
     }
 
     public LocalDateTime getDateTime() {
@@ -107,15 +83,15 @@ public class CreditOffer extends AbstractBaseEntity {
 
     @Override
     public String toString() {
-        return "CreditOffer{" +
-                "uid=" + uid +
-                ", order=" + order +
+        return "CreditOfferTo{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", orderUid=" + orderUid +
                 ", dateTime=" + dateTime +
                 ", userLogin='" + userName + '\'' +
                 ", amount=" + amount +
                 ", creditRate=" + creditRate +
                 ", period=" + period +
-                ", id=" + id +
                 '}';
     }
 }

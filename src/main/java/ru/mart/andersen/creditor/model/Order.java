@@ -45,7 +45,7 @@ public class Order {
 
     @Column(name = "discount")
     @NotNull
-    @Range(min = 0, max = 100, message = "discount should be in range 0-100")
+    @Range(min = 5, max = 100, message = "discount should be in range 0-100")
     private int discount;
 
     public Order() {

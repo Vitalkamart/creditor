@@ -1,5 +1,6 @@
 package ru.mart.andersen.creditor;
 
+import ru.mart.andersen.creditor.model.CreditOffer;
 import ru.mart.andersen.creditor.model.Item;
 import ru.mart.andersen.creditor.model.Order;
 import ru.mart.andersen.creditor.model.User;
@@ -13,6 +14,8 @@ import java.util.*;
 
 public class TestUtils {
     private static User user1;
+    private static User user2;
+
     private static Item item1;
     private static Item item2;
 
@@ -33,6 +36,13 @@ public class TestUtils {
         user1.setLogin("login1");
         user1.setPassword("$2a$10$RK56TyFl9Td2WI7rXI/.0ue/KRMpe42HO/bv.DsQKDKp9EzSQxHUW");
         user1.setRole(Role.USER);
+
+        user2 = new User();
+        user2.setId(2L);
+        user2.setName("Arnoldo Schwarzehfogel");
+        user2.setLogin("login2");
+        user2.setPassword("$2a$10$fkeDmtfaW7x9gpZm/Nh9guNtT8TT7J95xI7hJIbYV8.24e2E3mJ8G");
+        user2.setRole(Role.USER);
     }
 
     public static OrderTo getTestOrderTo() {
@@ -78,5 +88,28 @@ public class TestUtils {
         order.setOrderItems(items);
 
         return order;
+    }
+
+    public static CreditOffer getTestCreditOffer() {
+        CreditOffer creditOffer = new CreditOffer();
+        Order order = new Order();
+
+        order.setUid(UUID.fromString("02885d24-c297-4dd8-bf60-481175fa30a6"));
+        order.setPrice(new BigDecimal("100000.00"));
+        order.setId("225");
+        order.setDiscount(10);
+        order.setUser(user2);
+
+        Set<Item> items = new HashSet<>();
+        items.add(item1);
+
+        order.setOrderItems(items);
+
+        creditOffer.setOrder(order);
+        creditOffer.setUserName(user2.getLogin());
+        creditOffer.setAmount(new BigDecimal("90000.00"));
+        creditOffer.setPeriod(10);
+
+        return creditOffer;
     }
 }

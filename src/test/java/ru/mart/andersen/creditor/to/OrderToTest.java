@@ -69,9 +69,6 @@ class OrderToTest {
         }
     }
 
-    /**
-     * todo:
-     */
     private static void initXmlOrderToString() {
         xmlOrderToString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<order>\n" +

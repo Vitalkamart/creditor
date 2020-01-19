@@ -11,11 +11,12 @@ import java.util.Objects;
 
 import static ru.mart.andersen.creditor.util.CreditUtil.*;
 import static ru.mart.andersen.creditor.util.ValidationUtil.*;
+import static ru.mart.andersen.creditor.util.validators.CreditOfferValidator.validateCreditOffer;
 
 @Service
 public class PaymentService {
     public List<Payment> getPaymentList(CreditOffer creditOffer) {
-        checkGetPaymentListArgs(creditOffer);
+        validateCreditOffer(creditOffer);
 
         BigDecimal remaining = creditOffer.getAmount();
         int period = creditOffer.getPeriod();
@@ -44,10 +45,4 @@ public class PaymentService {
         return paymentList;
     }
 
-    private void checkGetPaymentListArgs(CreditOffer creditOffer) {
-        Objects.requireNonNull(creditOffer);
-        validateAmount(creditOffer.getAmount());
-        validateCreditRate(creditOffer.getCreditRate());
-        validatePeriod(creditOffer.getPeriod());
-    }
 }

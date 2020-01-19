@@ -6,8 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -22,13 +24,13 @@ public class Product extends AbstractBaseEntity {
 
     @Column(name = "min_sum")
     @NotNull
-    @Range(min = 0, message = "product minimal sum can't be negative")
-    private int minSum;
+    @DecimalMin(value = "0.00", message = "product minimal sum can't be negative")
+    private BigDecimal minSum;
 
     @Column(name = "max_sum")
     @NotNull
-    @Range(min = 0, message = "product maximum sum can't be negative")
-    private int maxSum;
+    @DecimalMin(value = "0.00", message = "product maximum sum can't be negative")
+    private BigDecimal maxSum;
 
     @Column(name = "min_rate")
     @NotNull
@@ -57,19 +59,19 @@ public class Product extends AbstractBaseEntity {
         this.uid = uid;
     }
 
-    public int getMinSum() {
+    public BigDecimal getMinSum() {
         return minSum;
     }
 
-    public void setMinSum(int minSum) {
+    public void setMinSum(BigDecimal minSum) {
         this.minSum = minSum;
     }
 
-    public int getMaxSum() {
+    public BigDecimal getMaxSum() {
         return maxSum;
     }
 
-    public void setMaxSum(int maxSum) {
+    public void setMaxSum(BigDecimal maxSum) {
         this.maxSum = maxSum;
     }
 
@@ -95,5 +97,18 @@ public class Product extends AbstractBaseEntity {
 
     public void setPeriod(int period) {
         this.period = period;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "uid='" + uid + '\'' +
+                ", minSum=" + minSum +
+                ", maxSum=" + maxSum +
+                ", minRate=" + minRate +
+                ", maxRate=" + maxRate +
+                ", period=" + period +
+                ", id=" + id +
+                '}';
     }
 }

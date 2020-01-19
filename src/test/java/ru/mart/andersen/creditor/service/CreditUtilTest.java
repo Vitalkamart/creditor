@@ -79,7 +79,7 @@ class CreditUtilTest {
     @Test
     void findBestInterestTest() {
         List<Integer> rates = new ArrayList<>();
-        for (int i = 50; i < 240; i++) {  // from 5% to 24%
+        for (int i = 50; i <= 240; i++) {  // from 5% to 24%
             rates.add(i);
         }
         int calculated = findBestInterest(rates, creditOffer.getPeriod(), price, amount);

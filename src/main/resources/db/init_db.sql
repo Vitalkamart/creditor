@@ -37,8 +37,8 @@ create unique index users_login_idx on users(login);
 create table products (
     id       bigserial primary key,
     uid      varchar(10) not null,
-    min_sum  integer     not null,
-    max_sum  integer     not null,
+    min_sum  decimal     not null,
+    max_sum  decimal     not null,
     min_rate integer     not null,
     max_rate integer     not null,
     period   integer     not null,
@@ -52,7 +52,7 @@ create table orders (
     discount integer,
     user_id  bigint       not null,
     check (price > 0),
-    check ((discount >= 0) and (discount <= 100)),
+    check ((discount >= 5) and (discount <= 100)),
     foreign key (user_id) references users (id) on delete no action
 );
 
@@ -75,16 +75,17 @@ create table orders_items (
 
 create table credit_offers (
     id          bigserial primary key,
-    uid         uuid         not null,
+    uid         uuid         default gen_random_uuid(),
     order_uid   uuid         not null,
     date_time   timestamp default now(),
-    user_login  varchar(100) not null,
+    user_name   varchar(100) not null,
     amount      decimal      not null,
     credit_rate integer      not null,
     period      integer      not null,
     check ((period > 1) and (period <= 120)),
     check ((credit_rate >= 50) and (credit_rate <= 240)),
     check (amount >= 0),
+    unique (uid),
     foreign key (order_uid) references orders(uid) on delete no action
 );
 

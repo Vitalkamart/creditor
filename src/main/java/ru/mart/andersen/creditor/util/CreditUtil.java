@@ -34,7 +34,7 @@ public class CreditUtil {
         int index = interests.size() / 2;
 
         int start = 0;
-        int end = interests.size() - 1;
+        int end = interests.size() -1 ;
 
         //loop for binary search index with closest sum without recursion
         //
@@ -49,6 +49,9 @@ public class CreditUtil {
             } else if (sum.compareTo(price) < 0) {
                 if (end == start) {
                     return currentIntrst;
+                } else if ((end - start) <= 2) {
+                    start += 1;
+                    index = start;
                 } else {
                     tmpSum = sum;
                     tmpSuitableIntrst = currentIntrst;
@@ -64,7 +67,13 @@ public class CreditUtil {
                     }
                 } else {
                     end = index - 1;
-                    index -= (end - start) / 2;
+                    int dif = end - start;
+                    if (dif <= 2) {
+                        end -= 1;
+                        index = end;
+                    } else {
+                        index -= dif / 2;
+                    }
                 }
             }
         }
@@ -72,8 +81,8 @@ public class CreditUtil {
         BigDecimal tmp = BigDecimal.valueOf(tmpSuitableIntrst)
                 .setScale(1, BigDecimal.ROUND_DOWN)
                 .divide(BigDecimal.TEN, BigDecimal.ROUND_HALF_DOWN);
-        //System.out.println("best founded interest: " + tmp + "%"
-        // + " sum = " + tmpSum + " interest=" + tmpSuitableIntrst);
+        System.out.println("best founded interest: " + tmp + "%"
+         + " sum = " + tmpSum + " interest=" + tmpSuitableIntrst);
         return tmpSuitableIntrst;
     }
 
@@ -139,6 +148,4 @@ public class CreditUtil {
                 .divide(BigDecimal.valueOf(1000), RoundingMode.DOWN)
                 .divide(BigDecimal.valueOf(period), RoundingMode.DOWN);
     }
-
-
 }

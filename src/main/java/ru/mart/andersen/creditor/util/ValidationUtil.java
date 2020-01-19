@@ -32,8 +32,8 @@ public class ValidationUtil {
     }
 
     public static void validateDiscount(int discountInt) {
-        if (discountInt > 100 || discountInt < 0) {
-            throw new IllegalArgumentException("discount can't be out of range 0-100");
+        if (discountInt > 100 || discountInt < 5) {
+            throw new IllegalArgumentException("discount can't be out of range 5-100");
         }
     }
 

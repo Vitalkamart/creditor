@@ -1,6 +1,6 @@
 insert into users (name, login, password, role) values
 ('User Userovich', 'login1', '$2a$10$RK56TyFl9Td2WI7rXI/.0ue/KRMpe42HO/bv.DsQKDKp9EzSQxHUW', 'USER'),
-('Arnoldo Schwarzehfogel', 'login2', '$2a$10$fkeDmtfaW7x9gpZm/Nh9guNtT8TT7J95xI7hJIbYV8.24e2E3mJ8G', 'ADMIN');
+('Arnoldo Schwarzehfogel', 'login2', '$2a$10$fkeDmtfaW7x9gpZm/Nh9guNtT8TT7J95xI7hJIbYV8.24e2E3mJ8G', 'USER');
 
 insert into orders (id, uid, price, discount, user_id) VALUES
 ('155', '9c6cd8a8-092e-4b09-a234-7eade8f24e49', 150000.00, 10, 1),
