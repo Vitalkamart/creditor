@@ -22,8 +22,6 @@ import static ru.mart.andersen.creditor.util.validators.UserValidator.validateUs
 
 @Service
 public class UserService {
-private static final Logger log = LoggerFactory.getLogger(UserService.class);
-
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
@@ -37,28 +35,23 @@ private static final Logger log = LoggerFactory.getLogger(UserService.class);
         this.passwordEncoder = passwordEncoder;
     }
 
-    //    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    //    @Transactional(readOnly=true, noRollbackFor=Exception.class)
     public Optional<User> findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
     @Transactional
     public boolean save(UserTo userTo) {
-        log.debug("UserService save(UserTo) with userTo=" + userTo);
         User user = getUserFromTo(userTo);
-        log.debug("UserService save(UserTo) getting user from to, user=" + user);
         validateUser(user);
-        log.debug("UserService save(UserTo) user is validated");
 
         if (user.isNew()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole(Role.USER);
-            log.debug("UserService save(UserTo) password is encoded and role is set");
         }
 
         if (!findByLogin(user.getLogin()).isPresent()) {
             userRepository.save(user);
-            log.debug("UserService save(UserTo) user is saved" + user);
             return true;
         }
         return false;

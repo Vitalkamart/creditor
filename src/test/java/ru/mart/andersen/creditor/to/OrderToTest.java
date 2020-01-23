@@ -4,10 +4,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.XMLConstants;
+import javax.xml.bind.*;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -57,15 +58,18 @@ class OrderToTest {
 
             marshaller.marshal(testOrder, sw);
 
-            StringReader sr = new StringReader(sw.toString());
+            XMLStreamReader sr = XMLInputFactory.newInstance()
+                    .createXMLStreamReader(new StringReader(sw.toString()));
 
-            OrderTo unmarshalled = (OrderTo) unmarshaller.unmarshal(sr);
+            JAXBElement<OrderTo> unmarshalledXML = unmarshaller.unmarshal(sr, OrderTo.class);
+
+            OrderTo unmarshalled = unmarshalledXML.getValue();
             sw.close();
             sr.close();
 
             assertEquals(testOrder.toString(), unmarshalled.toString());
-        } catch(JAXBException | IOException e) {
-            e.printStackTrace();
+        } catch (XMLStreamException | JAXBException | IOException ex) {
+            ex.printStackTrace();
         }
     }
 

@@ -11,12 +11,13 @@ import static ru.mart.andersen.creditor.util.ValidationUtil.*;
 
 public class CreditUtil {
     /**
-     *
-     * @param interests
-     * @param period
-     * @param price
-     * @param amount
-     * @return
+     * Finds such an interest from given array the total payment sum would be closest (less or equal) to
+     * the given price with
+     * @param interests array of interests
+     * @param period count of payments
+     * @param price total price of the order
+     * @param amount credit amount
+     * @return best suitable
      */
     public static int findBestInterest(List<Integer> interests,
                                        int period,
@@ -30,31 +31,30 @@ public class CreditUtil {
         BigDecimal sum;
 
         BigDecimal tmpSum = null;
-        int tmpSuitableIntrst = - 1;
+        int tmpSuitableInterest = - 1;
         int index = interests.size() / 2;
 
         int start = 0;
         int end = interests.size() -1 ;
 
         //loop for binary search index with closest sum without recursion
-        //
         while (end >= start) {
-            int currentIntrst = interests.get(index);
+            int currentInterest = interests.get(index);
 
-            validateCreditRate(currentIntrst);
+            validateCreditRate(currentInterest);
 
-            sum = getSum(currentIntrst, period, amount);
+            sum = getSum(currentInterest, period, amount);
             if (sum.compareTo(price) == 0) {
-                return currentIntrst;
+                return currentInterest;
             } else if (sum.compareTo(price) < 0) {
                 if (end == start) {
-                    return currentIntrst;
+                    return currentInterest;
                 } else if ((end - start) <= 2) {
                     start += 1;
                     index = start;
                 } else {
                     tmpSum = sum;
-                    tmpSuitableIntrst = currentIntrst;
+                    tmpSuitableInterest = currentInterest;
                     start = index + 1;
                     index += (end - start) / 2;
                 }
@@ -63,7 +63,7 @@ public class CreditUtil {
                     if (tmpSum == null) {
                         throw new NoSuitableInterestException("there is no suitable interest");
                     } else {
-                        return  tmpSuitableIntrst;
+                        return  tmpSuitableInterest;
                     }
                 } else {
                     end = index - 1;
@@ -78,16 +78,12 @@ public class CreditUtil {
             }
         }
 
-        BigDecimal tmp = BigDecimal.valueOf(tmpSuitableIntrst)
-                .setScale(1, BigDecimal.ROUND_DOWN)
-                .divide(BigDecimal.TEN, BigDecimal.ROUND_HALF_DOWN);
-        System.out.println("best founded interest: " + tmp + "%"
-         + " sum = " + tmpSum + " interest=" + tmpSuitableIntrst);
-        return tmpSuitableIntrst;
+        return tmpSuitableInterest;
     }
 
-    public static BigDecimal getSum(int currentIntrst, int period, BigDecimal amount) {
-        BigDecimal singlePay = calculateSinglePayment(currentIntrst, period, amount);
+
+    public static BigDecimal getSum(int currentInterest, int period, BigDecimal amount) {
+        BigDecimal singlePay = calculateSinglePayment(currentInterest, period, amount);
 
         return singlePay.multiply(BigDecimal.valueOf(period))
                 .setScale(2, BigDecimal.ROUND_DOWN);

@@ -15,7 +15,6 @@ import ru.mart.andersen.creditor.util.exceptions.UserValidationException;
 @RestController
 @RequestMapping("/api/user/")
 public class UserRestController {
-    private final Logger log = LoggerFactory.getLogger(UserRestController.class);
     private UserService userService;
 
     @Autowired
@@ -26,7 +25,6 @@ public class UserRestController {
     @ExceptionHandler(ApplicationValidationException.class)
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody UserTo userTo) {
-        log.debug("UserRestController register method with userTo=" + userTo);
         if (!userService.save(userTo)) {
             return new ResponseEntity<>("login is already used", HttpStatus.BAD_REQUEST);
         } else {

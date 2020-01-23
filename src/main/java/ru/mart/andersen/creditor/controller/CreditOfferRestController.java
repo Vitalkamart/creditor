@@ -18,7 +18,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/credit-offer")
 public class CreditOfferRestController {
-
     private CreditOfferService creditOfferService;
 
     @Autowired

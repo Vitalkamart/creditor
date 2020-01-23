@@ -4,6 +4,7 @@ import ru.mart.andersen.creditor.model.User;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UserTo {

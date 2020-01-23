@@ -16,27 +16,24 @@ import java.util.UUID;
 
 import static ru.mart.andersen.creditor.to.converter.OrderConverter.getOrderFromTo;
 import static ru.mart.andersen.creditor.to.converter.OrderConverter.getToFromOrder;
+import static ru.mart.andersen.creditor.util.validators.OrderValidator.validateOrder;
 
 @Service
 public class OrderService {
-
     private OrderRepository orderRepository;
-    private CreditOfferService creditOfferService;
 
     @Autowired
     public void setOrderRepository(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
-    @Autowired
-    public void setCreditOfferService(CreditOfferService creditOfferService) {
-        this.creditOfferService = creditOfferService;
-    }
+    public Order save(OrderTo orderTo) {
+        Objects.requireNonNull(orderTo);
 
-    @Transactional
-    public UUID save(OrderTo orderTo) {
-        System.out.println("OrderService save(orderTo) method with orderTo=" + orderTo);
-        return creditOfferService.manageOrderTo(orderTo);
+        Order order = getOrderFromTo(orderTo);
+        validateOrder(order);
+
+        return orderRepository.save(order);
     }
 
     public OrderTo get(UUID uid) {

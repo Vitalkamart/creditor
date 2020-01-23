@@ -59,12 +59,10 @@ public class CreditOfferService {
     }
 
     public CreditOffer getCreditOffer(Order order, String userName) {
-        System.out.println("CreditOfferService getCreditOffer(Order) method with order=" + order);
         Optional<Product> product = productRepository.findBySum(order.getPrice());
         CreditOffer creditOffer;
 
         if (product.isPresent()) {
-            System.out.println("CreditOfferService getCreditOffer(Order) method product is found: " + product.get());
             creditOffer = getCreditOffer(order,  product.get());
             creditOffer.setUserName(userName);
             return creditOffer;
@@ -86,34 +84,14 @@ public class CreditOfferService {
     }
 
     @Transactional
-    public UUID manageOrderTo(OrderTo orderTo) {
-        System.out.println("CreditOfferService manage(orderTo) method with orderTo=" + orderTo);
-        Objects.requireNonNull(orderTo);
-
-        Order order = getOrderFromTo(orderTo);
-        System.out.println("CreditOfferService manage(orderTo) method with order=" + order);
-        System.out.println();
-        validateOrder(order);
-        System.out.println("CreditOfferService manage(orderTo) orderTo is valid!!!");
-        System.out.println();
-        UUID orderUid = orderRepository.save(order).getUid();
-        System.out.println("CreditOfferService manage(orderTo) order with uid=" + orderUid + " is saved");
-        System.out.println();
-        String userName = orderTo.getCartTo().getUserTo().getName();
-        CreditOffer creditOffer = getCreditOffer(order, userName);
+    public void manageOrder(Order order, String username) {
+        CreditOffer creditOffer = getCreditOffer(order, username);
         creditOffer.setUid(UUID.randomUUID());
         creditOffer.setDateTime(LocalDateTime.now());
-        System.out.println("CreditOfferService manage(orderTo) method with creditOffer=" + creditOffer);
-        System.out.println();
         creditOfferRepository.save(creditOffer);
-        System.out.println("CreditOfferService manage(orderTo) creditOffer is saved!!!");
-        System.out.println();
-        return orderUid;
     }
 
     private void setCreditRate(CreditOffer creditOffer, int minRate, int maxRate) {
-        System.out.println("CreditOfferService setCreditRate(CreditOffer, minRate, maxRate)" +
-                " method with creditOffer=" + creditOffer + " minRate=" + minRate + " maxRate=" + maxRate);
         List<Integer> rates = new ArrayList<>();
         for (int i = minRate; i < maxRate; i++) {
             rates.add(i);
