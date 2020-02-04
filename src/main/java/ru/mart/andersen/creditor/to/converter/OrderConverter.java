@@ -1,13 +1,9 @@
 package ru.mart.andersen.creditor.to.converter;
 
-import ru.mart.andersen.creditor.model.Item;
 import ru.mart.andersen.creditor.model.Order;
 import ru.mart.andersen.creditor.to.CartTo;
 import ru.mart.andersen.creditor.to.OrderTo;
 import ru.mart.andersen.creditor.to.UserTo;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static ru.mart.andersen.creditor.to.converter.UserConverter.getUserFromTo;
 

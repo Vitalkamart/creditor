@@ -6,6 +6,7 @@ import ru.mart.andersen.creditor.util.exceptions.ItemValidationException;
 import ru.mart.andersen.creditor.util.exceptions.OrderValidationException;
 import ru.mart.andersen.creditor.util.exceptions.UserValidationException;
 
+import java.util.List;
 import java.util.Objects;
 
 import static ru.mart.andersen.creditor.util.ValidationUtil.*;
@@ -20,7 +21,11 @@ public class OrderValidator {
 
             UserValidator.validateLogin(order.getUser().getLogin());
             validateName(order.getUser().getName());
-            for (Item it :order.getOrderItems()) {
+
+            List<Item> items = order.getOrderItems();
+            validateItemList(items);
+
+            for (Item it : items) {
                 ItemValidator.validateItem(it);
             }
         } catch (NullPointerException | IllegalArgumentException ex) {
@@ -31,6 +36,14 @@ public class OrderValidator {
         } catch (ItemValidationException ex) {
             throw new OrderValidationException("order with id " + order.getUid() +
                     " " + ex.getMessage());
+        }
+    }
+
+    private static void validateItemList(List<Item> items) {
+        Objects.requireNonNull(items, "order item list can't be null");
+
+        if (items.isEmpty()) {
+            throw new OrderValidationException("item list can't be empty");
         }
     }
 }

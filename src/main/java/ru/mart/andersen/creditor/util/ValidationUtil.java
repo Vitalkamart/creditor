@@ -46,21 +46,21 @@ public class ValidationUtil {
     }
 
     public static void validateUid(UUID uid) {
-        if (uid == null) {
-            throw new IllegalArgumentException("uid can't be null");
-        }
+        Objects.requireNonNull(uid, "uid can't be null");
     }
 
     public static void validateName(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("name can't be empty or null");
-        } else if (name.length() < 4) {
+        } else if (name.length() < 5) {
             throw new IllegalArgumentException("name should contain at least 5 symbols");
         }
     }
     public static void validateLongId(Long id) {
-        if (id == null || id <= 0) {
-            throw new IllegalArgumentException("id can't be null or negative");
+        Objects.requireNonNull(id, "id can't be null");
+
+        if (id <= 0) {
+            throw new IllegalArgumentException("id can't be negative or zero");
         }
     }
 }

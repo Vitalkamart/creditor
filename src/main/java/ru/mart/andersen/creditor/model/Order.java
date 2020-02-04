@@ -6,10 +6,8 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -35,7 +33,8 @@ public class Order {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Item> items;
+    @JoinColumn(name = "order_uid", referencedColumnName = "uid")
+    private List<Item> items;
 
     @Column(name = "price", precision = 10, scale = 2)
     @NotNull
@@ -91,11 +90,11 @@ public class Order {
         this.user = user;
     }
 
-    public Set<Item> getOrderItems() {
+    public List<Item> getOrderItems() {
         return items;
     }
 
-    public void setOrderItems(Set<Item> items) {
+    public void setOrderItems(List<Item> items) {
         this.items = items;
     }
 

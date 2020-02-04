@@ -31,7 +31,7 @@ public class CreditOffer extends AbstractBaseEntity {
     @Size(min = 0, max = 100, message = "user login should have 5-100 symbols")
     private String userName;
 
-    @Column(name = "amount")
+    @Column(name = "amount", precision = 10, scale = 2)
     @NotNull(message = "credit amount can't be null")
     @DecimalMin(value = "0", message = "price can't be negative")
     private BigDecimal amount;

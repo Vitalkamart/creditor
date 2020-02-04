@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.mart.andersen.creditor.model.CreditOffer;
 import ru.mart.andersen.creditor.model.Order;
+import ru.mart.andersen.creditor.util.exceptions.NoSuitableInterestException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -77,7 +78,8 @@ class CreditUtilTest {
     }
 
     @Test
-    void findBestInterestTest() {
+    @DisplayName("best interest odd massive")
+    void findBestInterestTestOddMassive() {
         List<Integer> rates = new ArrayList<>();
         for (int i = 50; i <= 240; i++) {  // from 5% to 24%
             rates.add(i);
@@ -88,6 +90,31 @@ class CreditUtilTest {
     }
 
     @Test
+    @DisplayName("best interest even massive")
+    void findBestInterestTestEvenMassive() {
+        List<Integer> rates = new ArrayList<>();
+        for (int i = 50; i <= 239; i++) {  // from 5% to 23,9%
+            rates.add(i);
+        }
+        int calculated = findBestInterest(rates, creditOffer.getPeriod(), price, amount);
+        int expected = 199;
+        assertEquals(expected, calculated);
+    }
+
+    @Test
+    @DisplayName("no suitable interest")
+    void findBestInterestTestTooNarrowCreditInterestInterval() {
+        List<Integer> rates = new ArrayList<>();
+        for (int i = 200; i <= 239; i++) {  // from 20% to 24% (closest suitable is 19.9%)
+            rates.add(i);
+        }
+
+        assertThrows(NoSuitableInterestException.class,
+                () -> findBestInterest(rates, creditOffer.getPeriod(), price, amount));
+    }
+
+    @Test
+    @DisplayName("best interest illegal credit rates")
     void findBestInterestWithIllegalCreditRateTest() {
         List<Integer> rates = new ArrayList<>();
         for (int i = 50; i < 240; i++) {
@@ -101,6 +128,8 @@ class CreditUtilTest {
         assertThrows(IllegalArgumentException.class,
                 () -> findBestInterest(rates, creditOffer.getPeriod(), price, amount));
     }
+
+
 
 //    @Test
 //    void getUUID() {

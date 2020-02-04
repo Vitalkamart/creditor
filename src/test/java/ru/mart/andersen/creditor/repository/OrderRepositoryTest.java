@@ -2,7 +2,9 @@ package ru.mart.andersen.creditor.repository;
 
 import org.junit.ClassRule;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
@@ -37,6 +39,7 @@ class OrderRepositoryTest {
 
 
     @Test
+    @Disabled
     @DisplayName("save and get order")
     void aTest() {
         UUID uuid = orderRepository.save(testOrder).getUid();

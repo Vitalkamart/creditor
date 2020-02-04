@@ -6,19 +6,6 @@ import ru.mart.andersen.creditor.to.UserTo;
 
 public class UserConverter {
 
-    public static UserTo getUserToFromUser(User user) {
-        UserTo userTo = new UserTo();
-
-        userTo.setId(user.getId());
-        userTo.setLogin(user.getLogin());
-        userTo.setName(user.getName());
-        if (user.getRole() != null) {
-            userTo.setRole(user.getRole().getAuthority());
-        }
-
-        return userTo;
-    }
-
     public static User getUserFromTo(UserTo userTo) {
         User user = new User();
 

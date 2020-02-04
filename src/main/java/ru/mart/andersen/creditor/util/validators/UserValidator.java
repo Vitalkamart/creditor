@@ -11,7 +11,7 @@ public class UserValidator {
         validatePassword(user.getPassword());
         try{
             validateName(user.getName());
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | NullPointerException ex) {
             throw new UserValidationException("user " + ex.getMessage());
         }
     }
@@ -31,6 +31,12 @@ public class UserValidator {
         if (password == null || password.isEmpty()) {
             throw new UserValidationException("user password can't be empty or null");
         }
+
+        int length = password.length();
+        if (length < 5 || length > 25) {
+            throw new UserValidationException("user password should contain from 5 to 25 symbols");
+        }
+
     }
 
     protected static void validateId(Long id) {

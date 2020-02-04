@@ -26,16 +26,16 @@ class PaymentServiceTest {
 
         creditOffer = new CreditOffer();
         Order order = new Order();
-        order.setPrice(BigDecimal.valueOf(100000));                    // 100 000,00
+        order.setPrice(new BigDecimal("100000.00"));               // 100 000,00
         creditOffer.setPeriod(12);                                     // 12 months
-        creditOffer.setAmount(BigDecimal.valueOf(90000));              // 90 000,00 (cause of 10% discount)
+        creditOffer.setAmount(new BigDecimal("90000"));           // 90 000,00 (cause of 10% discount)
         creditOffer.setOrder(order);
         creditOffer.setCreditRate(199);                                // 19,9%
 
     }
 
     private static void fillExpectedList() {
-        expected.add(new Payment(1, new BigDecimal("90000"), new BigDecimal("6840.30"),
+        expected.add(new Payment(1, new BigDecimal("90000.00"), new BigDecimal("6840.30"),
                 new BigDecimal("1492.50"), new BigDecimal("8332.80")));
         expected.add(new Payment(2, new BigDecimal("83159.70"), new BigDecimal("6953.73"),
                 new BigDecimal("1379.07"), new BigDecimal("8332.80")));
@@ -69,5 +69,4 @@ class PaymentServiceTest {
         assertNotEquals(expected, payments);
         assertEquals(expected.toString(), payments.toString());
     }
-
 }

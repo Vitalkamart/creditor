@@ -11,7 +11,7 @@ public class ItemValidator {
             validatePrice(item.getPrice());
             validateStringId(item.getId());
             validateName(item.getName());
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | NullPointerException ex) {
             throw new ItemValidationException("item " + ex.getMessage());
         }
     }

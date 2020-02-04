@@ -17,7 +17,7 @@ import java.io.StringWriter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.mart.andersen.creditor.TestUtils.getTestOrderTo;
 
-class OrderToTest {
+class OrderToMarshallingTest {
     private static String xmlOrderToString;
     private static Marshaller marshaller;
     private static OrderTo testOrder;

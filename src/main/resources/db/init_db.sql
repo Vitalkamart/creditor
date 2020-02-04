@@ -58,20 +58,22 @@ create table orders (
 
 create table items (
     uid   uuid    primary key DEFAULT gen_random_uuid(),
+    order_uid uuid,
     id    varchar(255)  not null,
     name  varchar(255)  not null,
     price decimal       not null,
     check (price > 0),
-    unique (uid)
+    unique (uid),
+    foreign key (order_uid) references orders(uid)
 );
 
-create table orders_items (
-    order_uid  uuid  not null,
-    items_uid  uuid   not null,
-    unique (order_uid, items_uid),
-    foreign key (order_uid) references orders(uid) on delete no action,
-    foreign key (items_uid) references items(uid) on delete no action
-);
+-- create table orders_items (
+--     order_uid  uuid  not null,
+--     items_uid  uuid   not null,
+--     unique (order_uid, items_uid),
+--     foreign key (order_uid) references orders(uid) on delete no action,
+--     foreign key (items_uid) references items(uid) on delete no action
+-- );
 
 create table credit_offers (
     id          bigserial primary key,

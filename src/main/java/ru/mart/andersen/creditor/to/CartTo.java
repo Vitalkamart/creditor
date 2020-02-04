@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CartTo {
@@ -20,7 +18,7 @@ public class CartTo {
 
     @XmlElementWrapper(name = "item_list")
     @XmlElement(name = "item")
-    private Set<Item> items;
+    private List<Item> items;
 
     public UserTo getUserTo() {
         return userTo;
@@ -30,11 +28,11 @@ public class CartTo {
         this.userTo = userTo;
     }
 
-    public Set<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(Set<Item> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 

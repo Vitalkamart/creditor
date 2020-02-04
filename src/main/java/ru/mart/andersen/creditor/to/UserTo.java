@@ -19,7 +19,8 @@ public class UserTo {
         this.id = user.getId();
         this.login = user.getLogin();
         this.name = user.getName();
-        this.password = user.getPassword();
+        this.password = "**********";
+        this.role = user.getRole().getAuthority();
     }
 
     public UserTo() {

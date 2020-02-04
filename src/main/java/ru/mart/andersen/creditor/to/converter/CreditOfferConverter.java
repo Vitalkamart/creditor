@@ -3,19 +3,21 @@ package ru.mart.andersen.creditor.to.converter;
 import ru.mart.andersen.creditor.model.CreditOffer;
 import ru.mart.andersen.creditor.to.CreditOfferTo;
 
+import java.math.BigDecimal;
+
 public class CreditOfferConverter {
     public static CreditOfferTo getToFromCreditOffer(CreditOffer c) {
-        CreditOfferTo cTo = new CreditOfferTo();
+        CreditOfferTo creditOfferTo = new CreditOfferTo();
 
-        cTo.setId(c.getId());
-        cTo.setUid(c.getUid());
-        cTo.setOrderUid(c.getOrder().getUid());
-        cTo.setAmount(c.getAmount());
-        cTo.setCreditRate(c.getCreditRate());
-        cTo.setDateTime(c.getDateTime());
-        cTo.setPeriod(c.getPeriod());
-        cTo.setUserName(c.getUserName());
+        creditOfferTo.setId(c.getId());
+        creditOfferTo.setUid(c.getUid());
+        creditOfferTo.setOrderUid(c.getOrder().getUid());
+        creditOfferTo.setAmount(c.getAmount().setScale(2, BigDecimal.ROUND_HALF_DOWN));
+        creditOfferTo.setCreditRate(c.getCreditRate());
+        creditOfferTo.setDateTime(c.getDateTime());
+        creditOfferTo.setPeriod(c.getPeriod());
+        creditOfferTo.setUserName(c.getUserName());
 
-        return cTo;
+        return creditOfferTo;
     }
 }

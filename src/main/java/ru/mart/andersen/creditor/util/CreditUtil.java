@@ -24,9 +24,7 @@ public class CreditUtil {
                                        BigDecimal price,
                                        BigDecimal amount) {
         Objects.requireNonNull(interests);
-        validatePeriod(period);
         validatePrice(price);
-        validateAmount(amount);
 
         BigDecimal sum;
 
@@ -40,10 +38,8 @@ public class CreditUtil {
         //loop for binary search index with closest sum without recursion
         while (end >= start) {
             int currentInterest = interests.get(index);
-
-            validateCreditRate(currentInterest);
-
             sum = getSum(currentInterest, period, amount);
+
             if (sum.compareTo(price) == 0) {
                 return currentInterest;
             } else if (sum.compareTo(price) < 0) {
@@ -78,11 +74,19 @@ public class CreditUtil {
             }
         }
 
+        if (tmpSuitableInterest == -1) {
+            throw new NoSuitableInterestException("there is no suitable interest");
+        }
+
         return tmpSuitableInterest;
     }
 
 
     public static BigDecimal getSum(int currentInterest, int period, BigDecimal amount) {
+        validateCreditRate(currentInterest);
+        validatePeriod(period);
+        validateAmount(amount);
+
         BigDecimal singlePay = calculateSinglePayment(currentInterest, period, amount);
 
         return singlePay.multiply(BigDecimal.valueOf(period))

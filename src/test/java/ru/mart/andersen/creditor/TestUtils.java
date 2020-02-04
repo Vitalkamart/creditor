@@ -13,36 +13,48 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class TestUtils {
-    private static User user1;
-    private static User user2;
+    public static final User USER_1;
+    public static final User USER_2;
 
-    private static Item item1;
-    private static Item item2;
+    public static final Item ITEM_1;
+    public static final Item ITEM_2;
+
+    public static final String SYMBOLS_4 = "Name";
+    public static final String SYMBOLS_26 = "Lorem ipsum dolor sit amet";
+    public static final String SYMBOLS_101 = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, " +
+            "sed diam nonummy nibh euismod tincidunt ut ";
+    public static final String SYMBOLS_256 = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, " +
+            "sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim " +
+            "ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea co";
+
+    public static final int BAD_CREDIT_RATE_LOW = 49;
+    public static final int BAD_CREDIT_RATE_HIGH = 241;
 
     static {
-        item1 = new Item();
-        item1.setPrice(new BigDecimal("100000.00"));
-        item1.setName("диван");
-        item1.setId("1");
+        ITEM_1 = new Item();
+        ITEM_1.setPrice(new BigDecimal("100000.00"));
+        ITEM_1.setName("диван");
+        ITEM_1.setId("1");
 
-        item2 = new Item();
-        item2.setPrice(new BigDecimal("50000.00"));
-        item2.setName("стул");
-        item2.setId("2");
+        ITEM_2 = new Item();
+        ITEM_2.setPrice(new BigDecimal("50000.00"));
+        ITEM_2.setName("стул");
+        ITEM_2.setId("2");
 
-        user1 = new User();
-        user1.setId(1L);
-        user1.setName("User Userovich");
-        user1.setLogin("login1");
-        user1.setPassword("$2a$10$RK56TyFl9Td2WI7rXI/.0ue/KRMpe42HO/bv.DsQKDKp9EzSQxHUW");
-        user1.setRole(Role.USER);
+        USER_1 = new User();
+        USER_1.setId(1L);
+        USER_1.setName("User Userovich");
+        USER_1.setLogin("login1");
+        USER_1.setPassword("$2a$10$RK56TyFl9Td2WI7rXI/.0ue/KRMpe42HO/bv.DsQKDKp9EzSQxHUW");
+        USER_1.setRole(Role.USER);
 
-        user2 = new User();
-        user2.setId(2L);
-        user2.setName("Arnoldo Schwarzehfogel");
-        user2.setLogin("login2");
-        user2.setPassword("$2a$10$fkeDmtfaW7x9gpZm/Nh9guNtT8TT7J95xI7hJIbYV8.24e2E3mJ8G");
-        user2.setRole(Role.USER);
+        USER_2 = new User();
+        USER_2.setId(2L);
+        USER_2.setName("Arnoldo Schwarzehfogel");
+        USER_2.setLogin("login2");
+        USER_2.setPassword("$2a$10$fkeDmtfaW7x9gpZm/Nh9guNtT8TT7J95xI7hJIbYV8.24e2E3mJ8G");
+        USER_2.setRole(Role.USER);
+
     }
 
     public static OrderTo getTestOrderTo() {
@@ -58,9 +70,9 @@ public class TestUtils {
         userTo.setLogin("login1");
         userTo.setName("User Userovich");
 
-        Set<Item> itemList = new HashSet<>();
-        itemList.add(item1);
-        itemList.add(item2);
+        List<Item> itemList = new ArrayList<>();
+        itemList.add(ITEM_1);
+        itemList.add(ITEM_2);
 
         CartTo cartTo = new CartTo();
         cartTo.setUserTo(userTo);
@@ -77,13 +89,13 @@ public class TestUtils {
         order.setPrice(new BigDecimal("250000.00"));
         order.setId("115");
         order.setDiscount(17);
-        order.setUser(user1);
+        order.setUser(USER_1);
 
-        Set<Item> items = new HashSet<>();
-        items.add(item1);
-        items.add(item2);
-        items.add(item2);
-        items.add(item2);
+        List<Item> items = new ArrayList<>();
+        items.add(ITEM_1);
+        items.add(ITEM_2);
+        items.add(ITEM_2);
+        items.add(ITEM_2);
 
         order.setOrderItems(items);
 
@@ -98,15 +110,15 @@ public class TestUtils {
         order.setPrice(new BigDecimal("100000.00"));
         order.setId("225");
         order.setDiscount(10);
-        order.setUser(user2);
+        order.setUser(USER_2);
 
-        Set<Item> items = new HashSet<>();
-        items.add(item1);
+        List<Item> items = new ArrayList<>();
+        items.add(ITEM_1);
 
         order.setOrderItems(items);
 
         creditOffer.setOrder(order);
-        creditOffer.setUserName(user2.getLogin());
+        creditOffer.setUserName(USER_2.getLogin());
         creditOffer.setAmount(new BigDecimal("90000.00"));
         creditOffer.setPeriod(10);
 

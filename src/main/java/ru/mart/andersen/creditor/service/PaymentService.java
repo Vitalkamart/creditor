@@ -18,7 +18,7 @@ public class PaymentService {
     public List<Payment> getPaymentList(CreditOffer creditOffer) {
         validateCreditOffer(creditOffer);
 
-        BigDecimal remaining = creditOffer.getAmount();
+        BigDecimal remaining = creditOffer.getAmount().setScale(2, BigDecimal.ROUND_HALF_DOWN);
         int period = creditOffer.getPeriod();
         int creditRate = creditOffer.getCreditRate();
         BigDecimal monthPay = calculateSinglePayment(creditRate, period,remaining)
@@ -29,10 +29,9 @@ public class PaymentService {
 
         for (int month = 1; month <= period; month++) {
             Payment payment = new Payment();
-            BigDecimal interestPay = remaining.multiply(interest)
-                    .setScale(2, BigDecimal.ROUND_HALF_DOWN);
-            BigDecimal principalPay = monthPay.subtract(interestPay)
-                    .setScale(2, BigDecimal.ROUND_HALF_DOWN);
+            BigDecimal interestPay = remaining.multiply(interest).setScale(2, BigDecimal.ROUND_HALF_DOWN);
+            BigDecimal principalPay = monthPay.subtract(interestPay).setScale(2, BigDecimal.ROUND_HALF_DOWN);
+
             payment.setMonth(month);
             payment.setPayment(monthPay);
             payment.setInterestPayment(interestPay);
